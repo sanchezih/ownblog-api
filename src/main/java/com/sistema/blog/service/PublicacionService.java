@@ -1,9 +1,9 @@
-package com.sistema.blog.servicio;
+package com.sistema.blog.service;
 
 import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
 
-public interface PublicacionServicio {
+public interface PublicacionService {
 
 	public PublicacionDTO crearPublicacion(PublicacionDTO publicacionDTO);
 	

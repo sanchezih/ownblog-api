@@ -1,4 +1,4 @@
-package com.sistema.blog.entidades;
+package com.sistema.blog.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +24,10 @@ public class Comentario {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id", nullable = false)
 	private Publicacion publicacion;
+
+	public Comentario() {
+		super();
+	}
 
 	public long getId() {
 		return id;
@@ -63,10 +67,6 @@ public class Comentario {
 
 	public void setPublicacion(Publicacion publicacion) {
 		this.publicacion = publicacion;
-	}
-
-	public Comentario() {
-		super();
 	}
 
 }

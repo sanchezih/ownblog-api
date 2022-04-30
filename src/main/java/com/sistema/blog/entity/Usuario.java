@@ -1,4 +1,4 @@
-package com.sistema.blog.entidades;
+package com.sistema.blog.entity;
 
 import java.util.HashSet;
 import java.util.Set;

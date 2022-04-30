@@ -1,10 +1,10 @@
-package com.sistema.blog.repositorio;
+package com.sistema.blog.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sistema.blog.entidades.Usuario;
+import com.sistema.blog.entity.Usuario;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>{
 

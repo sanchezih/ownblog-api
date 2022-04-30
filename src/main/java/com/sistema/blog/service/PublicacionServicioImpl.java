@@ -1,4 +1,4 @@
-package com.sistema.blog.servicio;
+package com.sistema.blog.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
-import com.sistema.blog.entidades.Publicacion;
+import com.sistema.blog.entity.Publicacion;
 import com.sistema.blog.excepciones.ResourceNotFoundException;
-import com.sistema.blog.repositorio.PublicacionRepositorio;
+import com.sistema.blog.repository.PublicacionRepositorio;
 
 @Service
-public class PublicacionServicioImpl implements PublicacionServicio {
+public class PublicacionServicioImpl implements PublicacionService {
 
 	@Autowired
 	private ModelMapper modelMapper;

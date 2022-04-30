@@ -5,24 +5,28 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.sistema.blog.entidades.Comentario;
+import com.sistema.blog.entity.Comentario;
 
 public class PublicacionDTO {
 
 	private Long id;
-	
+
 	@NotEmpty
-	@Size(min = 2,message = "El titulo de la publicación deberia tener al menos 2 caracteres")
+	@Size(min = 2, message = "El titulo de la publicación deberia tener al menos 2 caracteres")
 	private String titulo;
-	
+
 	@NotEmpty
-	@Size(min = 10,message = "La descripción de la publicación deberia tener al menos 10 caracteres")
+	@Size(min = 10, message = "La descripción de la publicación deberia tener al menos 10 caracteres")
 	private String descripcion;
-	
+
 	@NotEmpty
 	private String contenido;
-	
+
 	private Set<Comentario> comentarios;
+
+	public PublicacionDTO() {
+		super();
+	}
 
 	public Long getId() {
 		return id;
@@ -62,10 +66,6 @@ public class PublicacionDTO {
 
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
-	}
-
-	public PublicacionDTO() {
-		super();
 	}
 
 }
