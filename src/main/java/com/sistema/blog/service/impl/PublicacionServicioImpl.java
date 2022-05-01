@@ -1,4 +1,4 @@
-package com.sistema.blog.service;
+package com.sistema.blog.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,8 @@ import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.entity.Publicacion;
 import com.sistema.blog.excepciones.ResourceNotFoundException;
-import com.sistema.blog.repository.PublicacionRepositorio;
+import com.sistema.blog.repository.PublicacionRepository;
+import com.sistema.blog.service.PublicacionService;
 
 @Service
 public class PublicacionServicioImpl implements PublicacionService {
@@ -24,13 +25,14 @@ public class PublicacionServicioImpl implements PublicacionService {
 	private ModelMapper modelMapper;
 
 	@Autowired
-	private PublicacionRepositorio publicacionRepositorio;
+	private PublicacionRepository publicacionRepository;
 
 	@Override
 	public PublicacionDTO crearPublicacion(PublicacionDTO publicacionDTO) {
+
 		Publicacion publicacion = mapearEntidad(publicacionDTO);
 
-		Publicacion nuevaPublicacion = publicacionRepositorio.save(publicacion);
+		Publicacion nuevaPublicacion = publicacionRepository.save(publicacion);
 
 		PublicacionDTO publicacionRespuesta = mapearDTO(nuevaPublicacion);
 		return publicacionRespuesta;
@@ -39,11 +41,12 @@ public class PublicacionServicioImpl implements PublicacionService {
 	@Override
 	public PublicacionRespuesta obtenerTodasLasPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir) {
+
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending()
 				: Sort.by(ordenarPor).descending();
 		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
 
-		Page<Publicacion> publicaciones = publicacionRepositorio.findAll(pageable);
+		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
 
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
 		List<PublicacionDTO> contenido = listaDePublicaciones.stream().map(publicacion -> mapearDTO(publicacion))
@@ -62,38 +65,48 @@ public class PublicacionServicioImpl implements PublicacionService {
 
 	@Override
 	public PublicacionDTO obtenerPublicacionPorId(long id) {
-		Publicacion publicacion = publicacionRepositorio.findById(id)
+		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 		return mapearDTO(publicacion);
 	}
 
 	@Override
 	public PublicacionDTO actualizarPublicacion(PublicacionDTO publicacionDTO, long id) {
-		Publicacion publicacion = publicacionRepositorio.findById(id)
+		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 
 		publicacion.setTitulo(publicacionDTO.getTitulo());
 		publicacion.setDescripcion(publicacionDTO.getDescripcion());
 		publicacion.setContenido(publicacionDTO.getContenido());
 
-		Publicacion publicacionActualizada = publicacionRepositorio.save(publicacion);
+		Publicacion publicacionActualizada = publicacionRepository.save(publicacion);
 		return mapearDTO(publicacionActualizada);
 	}
 
 	@Override
 	public void eliminarPublicacion(long id) {
-		Publicacion publicacion = publicacionRepositorio.findById(id)
+		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
-		publicacionRepositorio.delete(publicacion);
+		publicacionRepository.delete(publicacion);
 	}
 
-	// Convierte entidad a DTO
+	/**
+	 * Convierte entidad a DTO
+	 * 
+	 * @param publicacion
+	 * @return
+	 */
 	private PublicacionDTO mapearDTO(Publicacion publicacion) {
 		PublicacionDTO publicacionDTO = modelMapper.map(publicacion, PublicacionDTO.class);
 		return publicacionDTO;
 	}
 
-	// Convierte de DTO a Entidad
+	/**
+	 * Convierte de DTO a Entidad
+	 * 
+	 * @param publicacionDTO
+	 * @return
+	 */
 	private Publicacion mapearEntidad(PublicacionDTO publicacionDTO) {
 		Publicacion publicacion = modelMapper.map(publicacionDTO, Publicacion.class);
 		return publicacion;
