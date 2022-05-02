@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sistema.blog.dto.PublicacionDTO;
 import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.service.PublicacionService;
-import com.sistema.blog.utilerias.AppConstantes;
+import com.sistema.blog.util.AppConstantes;
 
 @RestController
 @RequestMapping("/api/publicaciones")

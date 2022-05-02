@@ -29,11 +29,8 @@ public class PublicacionServicioImpl implements PublicacionService {
 
 	@Override
 	public PublicacionDTO crearPublicacion(PublicacionDTO publicacionDTO) {
-
 		Publicacion publicacion = mapearEntidad(publicacionDTO);
-
 		Publicacion nuevaPublicacion = publicacionRepository.save(publicacion);
-
 		PublicacionDTO publicacionRespuesta = mapearDTO(nuevaPublicacion);
 		return publicacionRespuesta;
 	}
