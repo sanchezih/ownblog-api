@@ -11,6 +11,10 @@ public class PublicacionRespuesta {
 	private int totalPaginas;
 	private boolean ultima;
 
+	public PublicacionRespuesta() {
+		super();
+	}
+
 	public List<PublicacionDTO> getContenido() {
 		return contenido;
 	}
@@ -57,10 +61,6 @@ public class PublicacionRespuesta {
 
 	public void setUltima(boolean ultima) {
 		this.ultima = ultima;
-	}
-
-	public PublicacionRespuesta() {
-		super();
 	}
 
 }
