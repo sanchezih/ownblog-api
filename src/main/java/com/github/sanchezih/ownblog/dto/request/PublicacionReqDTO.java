@@ -1,4 +1,4 @@
-package com.github.sanchezih.ownblog.dto;
+package com.github.sanchezih.ownblog.dto.request;
 
 import java.util.Set;
 

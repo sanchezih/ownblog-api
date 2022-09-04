@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.PublicacionReqDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionResDTO;
+import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
+import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 import com.github.sanchezih.ownblog.util.AppConstantes;
 
@@ -26,6 +26,8 @@ public class PublicacionController {
 
 	@Autowired
 	private PublicacionService publicacionService;
+
+	/*----------------------------------------------------------------------------*/
 
 	@GetMapping
 	public PublicacionResDTO getAllPublicaciones(

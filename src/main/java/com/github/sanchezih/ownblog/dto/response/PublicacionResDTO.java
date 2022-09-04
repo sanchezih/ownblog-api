@@ -1,6 +1,8 @@
-package com.github.sanchezih.ownblog.dto;
+package com.github.sanchezih.ownblog.dto.response;
 
 import java.util.List;
+
+import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
 
 public class PublicacionResDTO {
 

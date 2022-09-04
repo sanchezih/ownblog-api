@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.PublicacionReqDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionResDTO;
+import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
+import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.excepciones.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
@@ -48,18 +48,15 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
-			String sortDir) {
+	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor, String sortDir) {
 
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending()
-				: Sort.by(ordenarPor).descending();
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending() : Sort.by(ordenarPor).descending();
 		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
 
 		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
 
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
-		List<PublicacionReqDTO> contenido = listaDePublicaciones.stream()
-				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
+		List<PublicacionReqDTO> contenido = listaDePublicaciones.stream().map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
 
 		PublicacionResDTO pubResp = new PublicacionResDTO();
 		pubResp.setContenido(contenido);
