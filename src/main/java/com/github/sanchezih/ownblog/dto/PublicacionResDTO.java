@@ -2,24 +2,28 @@ package com.github.sanchezih.ownblog.dto;
 
 import java.util.List;
 
-public class PublicacionRespuesta {
+public class PublicacionResDTO {
 
-	private List<PublicacionDTO> contenido;
+	private List<PublicacionReqDTO> contenido;
 	private int numeroPagina;
 	private int medidaPagina;
 	private long totalElementos;
 	private int totalPaginas;
 	private boolean ultima;
 
-	public PublicacionRespuesta() {
+	/*----------------------------------------------------------------------------*/
+
+	public PublicacionResDTO() {
 		super();
 	}
 
-	public List<PublicacionDTO> getContenido() {
+	/*----------------------------------------------------------------------------*/
+
+	public List<PublicacionReqDTO> getContenido() {
 		return contenido;
 	}
 
-	public void setContenido(List<PublicacionDTO> contenido) {
+	public void setContenido(List<PublicacionReqDTO> contenido) {
 		this.contenido = contenido;
 	}
 

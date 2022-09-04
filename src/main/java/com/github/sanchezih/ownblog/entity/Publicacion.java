@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "publicaciones", uniqueConstraints = { @UniqueConstraint(columnNames = { "titulo" }) })
+@Table(name = "publicacion", uniqueConstraints = { @UniqueConstraint(columnNames = { "titulo" }) })
 public class Publicacion {
 
 	@Id
@@ -35,6 +35,22 @@ public class Publicacion {
 	@JsonBackReference
 	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Comentario> comentarios = new HashSet<>();
+
+	/*----------------------------------------------------------------------------*/
+
+	public Publicacion() {
+		super();
+	}
+
+	public Publicacion(Long id, String titulo, String descripcion, String contenido) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.contenido = contenido;
+	}
+
+	/*----------------------------------------------------------------------------*/
 
 	public Long getId() {
 		return id;
@@ -74,18 +90,6 @@ public class Publicacion {
 
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
-	}
-
-	public Publicacion() {
-		super();
-	}
-
-	public Publicacion(Long id, String titulo, String descripcion, String contenido) {
-		super();
-		this.id = id;
-		this.titulo = titulo;
-		this.descripcion = descripcion;
-		this.contenido = contenido;
 	}
 
 }

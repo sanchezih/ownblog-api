@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.PublicacionDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionRespuesta;
+import com.github.sanchezih.ownblog.dto.PublicacionReqDTO;
+import com.github.sanchezih.ownblog.dto.PublicacionResDTO;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 import com.github.sanchezih.ownblog.util.AppConstantes;
 
@@ -28,28 +28,28 @@ public class PublicacionController {
 	private PublicacionService publicacionService;
 
 	@GetMapping
-	public PublicacionRespuesta listarPublicaciones(
+	public PublicacionResDTO getAllPublicaciones(
 			@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false) int numeroDePagina,
 			@RequestParam(value = "pageSize", defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO, required = false) int medidaDePagina,
 			@RequestParam(value = "sortBy", defaultValue = AppConstantes.ORDENAR_POR_DEFECTO, required = false) String ordenarPor,
 			@RequestParam(value = "sortDir", defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO, required = false) String sortDir) {
-		return publicacionService.obtenerTodasLasPublicaciones(numeroDePagina, medidaDePagina, ordenarPor, sortDir);
+		return publicacionService.getAllPublicaciones(numeroDePagina, medidaDePagina, ordenarPor, sortDir);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PublicacionDTO> obtenerPublicacionPorId(@PathVariable(name = "id") long id) {
+	public ResponseEntity<PublicacionReqDTO> obtenerPublicacionPorId(@PathVariable(name = "id") long id) {
 		return ResponseEntity.ok(publicacionService.obtenerPublicacionPorId(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<PublicacionDTO> guardarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO) {
-		return new ResponseEntity<>(publicacionService.crearPublicacion(publicacionDTO), HttpStatus.CREATED);
+	public ResponseEntity<PublicacionReqDTO> guardarPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO) {
+		return new ResponseEntity<>(publicacionService.createPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<PublicacionDTO> actualizarPublicacion(@Valid @RequestBody PublicacionDTO publicacionDTO,
+	public ResponseEntity<PublicacionReqDTO> actualizarPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO,
 			@PathVariable(name = "id") long id) {
-		PublicacionDTO publicacionRespuesta = publicacionService.actualizarPublicacion(publicacionDTO, id);
+		PublicacionReqDTO publicacionRespuesta = publicacionService.actualizarPublicacion(publicacionDTO, id);
 		return new ResponseEntity<>(publicacionRespuesta, HttpStatus.OK);
 	}
 
