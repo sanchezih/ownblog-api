@@ -10,7 +10,7 @@ public interface PublicacionService {
 	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir);
 
-	public PublicacionReqDTO obtenerPublicacionPorId(long id);
+	public PublicacionReqDTO getPublicacionById(long id);
 
 	public PublicacionReqDTO actualizarPublicacion(PublicacionReqDTO publicacionRequestDTO, long id);
 

@@ -73,9 +73,8 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO obtenerPublicacionPorId(long id) {
-		Publicacion publicacion = publicacionRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+	public PublicacionReqDTO getPublicacionById(long id) {
+		Publicacion publicacion = publicacionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 		return mapPublicacionToPublicacionRequestDTO(publicacion);
 	}
 

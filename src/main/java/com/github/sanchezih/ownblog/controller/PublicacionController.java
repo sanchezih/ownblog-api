@@ -31,16 +31,18 @@ public class PublicacionController {
 
 	@GetMapping
 	public PublicacionResDTO getAllPublicaciones(
-			@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false) int numeroDePagina,
+
 			@RequestParam(value = "pageSize", defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO, required = false) int medidaDePagina,
+			@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false) int numeroDePagina,
 			@RequestParam(value = "sortBy", defaultValue = AppConstantes.ORDENAR_POR_DEFECTO, required = false) String ordenarPor,
 			@RequestParam(value = "sortDir", defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO, required = false) String sortDir) {
+
 		return publicacionService.getAllPublicaciones(numeroDePagina, medidaDePagina, ordenarPor, sortDir);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<PublicacionReqDTO> obtenerPublicacionPorId(@PathVariable(name = "id") long id) {
-		return ResponseEntity.ok(publicacionService.obtenerPublicacionPorId(id));
+		return ResponseEntity.ok(publicacionService.getPublicacionById(id));
 	}
 
 	@PostMapping
