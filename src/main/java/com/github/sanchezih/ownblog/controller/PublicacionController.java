@@ -29,6 +29,14 @@ public class PublicacionController {
 
 	/*----------------------------------------------------------------------------*/
 
+	/**
+	 * 
+	 * @param medidaDePagina
+	 * @param numeroDePagina
+	 * @param ordenarPor
+	 * @param sortDir
+	 * @return
+	 */
 	@GetMapping
 	public PublicacionResDTO getAllPublicaciones(
 
@@ -40,26 +48,47 @@ public class PublicacionController {
 		return publicacionService.getAllPublicaciones(numeroDePagina, medidaDePagina, ordenarPor, sortDir);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<PublicacionReqDTO> obtenerPublicacionPorId(@PathVariable(name = "id") long id) {
+	public ResponseEntity<PublicacionReqDTO> getPublicacionById(@PathVariable(name = "id") long id) {
 		return ResponseEntity.ok(publicacionService.getPublicacionById(id));
 	}
 
+	/**
+	 * 
+	 * @param publicacionDTO
+	 * @return
+	 */
 	@PostMapping
-	public ResponseEntity<PublicacionReqDTO> guardarPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO) {
-		return new ResponseEntity<>(publicacionService.createPublicacion(publicacionDTO), HttpStatus.CREATED);
+	public ResponseEntity<PublicacionReqDTO> addPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO) {
+		return new ResponseEntity<>(publicacionService.addPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
+	/**
+	 * 
+	 * @param publicacionDTO
+	 * @param id
+	 * @return
+	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<PublicacionReqDTO> actualizarPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO,
+	public ResponseEntity<PublicacionReqDTO> updatePublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO,
 			@PathVariable(name = "id") long id) {
-		PublicacionReqDTO publicacionRespuesta = publicacionService.actualizarPublicacion(publicacionDTO, id);
+		PublicacionReqDTO publicacionRespuesta = publicacionService.updatePublicacion(publicacionDTO, id);
 		return new ResponseEntity<>(publicacionRespuesta, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarPublicacion(@PathVariable(name = "id") long id) {
-		publicacionService.eliminarPublicacion(id);
+	public ResponseEntity<String> deletePublicacion(@PathVariable(name = "id") long id) {
+		publicacionService.deletePublicacion(id);
 		return new ResponseEntity<>("Publicacion eliminada con exito", HttpStatus.OK);
 	}
 }

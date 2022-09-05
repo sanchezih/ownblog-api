@@ -5,14 +5,14 @@ import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
 
 public interface PublicacionService {
 
-	public PublicacionReqDTO createPublicacion(PublicacionReqDTO publicacionRequestDTO);
+	public PublicacionReqDTO addPublicacion(PublicacionReqDTO publicacionRequestDTO);
 
 	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir);
 
 	public PublicacionReqDTO getPublicacionById(long id);
 
-	public PublicacionReqDTO actualizarPublicacion(PublicacionReqDTO publicacionRequestDTO, long id);
+	public PublicacionReqDTO updatePublicacion(PublicacionReqDTO publicacionRequestDTO, long id);
 
-	public void eliminarPublicacion(long id);
+	public void deletePublicacion(long id);
 }

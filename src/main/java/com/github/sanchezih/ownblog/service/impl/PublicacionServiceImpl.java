@@ -33,7 +33,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO createPublicacion(PublicacionReqDTO publicacionReqDTO) {
+	public PublicacionReqDTO addPublicacion(PublicacionReqDTO publicacionReqDTO) {
 
 		// Se convierte el DTO en entidad
 		Publicacion publicacion = mapPublicacionReqDTOToPublicacion(publicacionReqDTO);
@@ -82,7 +82,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO actualizarPublicacion(PublicacionReqDTO publicacionRequestDTO, long id) {
+	public PublicacionReqDTO updatePublicacion(PublicacionReqDTO publicacionRequestDTO, long id) {
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 
@@ -98,7 +98,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public void eliminarPublicacion(long id) {
+	public void deletePublicacion(long id) {
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 		publicacionRepository.delete(publicacion);
