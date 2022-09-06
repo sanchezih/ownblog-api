@@ -2,6 +2,7 @@ package com.github.sanchezih.ownblog.service;
 
 import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
 import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
+import com.github.sanchezih.ownblog.entity.Publicacion;
 
 public interface PublicacionService {
 
@@ -10,7 +11,7 @@ public interface PublicacionService {
 	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir);
 
-	public PublicacionReqDTO getPublicacionById(long id);
+	public Publicacion getOneById(long id);
 
 	public PublicacionReqDTO updatePublicacion(PublicacionReqDTO publicacionRequestDTO, long id);
 

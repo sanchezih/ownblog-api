@@ -48,15 +48,18 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor, String sortDir) {
+	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
+			String sortDir) {
 
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending() : Sort.by(ordenarPor).descending();
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending()
+				: Sort.by(ordenarPor).descending();
 		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
 
 		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
 
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
-		List<PublicacionReqDTO> contenido = listaDePublicaciones.stream().map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
+		List<PublicacionReqDTO> contenido = listaDePublicaciones.stream()
+				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
 
 		PublicacionResDTO pubResp = new PublicacionResDTO();
 		pubResp.setContenido(contenido);
@@ -73,9 +76,11 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO getPublicacionById(long id) {
-		Publicacion publicacion = publicacionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
-		return mapPublicacionToPublicacionRequestDTO(publicacion);
+	public Publicacion getOneById(long id) {
+		Publicacion publicacion = publicacionRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+		//return mapPublicacionToPublicacionRequestDTO(publicacion);
+		return publicacion;
 	}
 
 	/**

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
 import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
+import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 import com.github.sanchezih.ownblog.util.AppConstantes;
 
@@ -54,8 +55,8 @@ public class PublicacionController {
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<PublicacionReqDTO> getPublicacionById(@PathVariable(name = "id") long id) {
-		return ResponseEntity.ok(publicacionService.getPublicacionById(id));
+	public ResponseEntity<?> getPublicacion(@PathVariable(name = "id") long id) {
+		return ResponseEntity.ok(publicacionService.getOneById(id));
 	}
 
 	/**
