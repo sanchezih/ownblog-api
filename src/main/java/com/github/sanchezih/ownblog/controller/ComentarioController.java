@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.ComentarioDTO;
+import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.service.ComentarioService;
 
 @RestController
@@ -26,30 +26,49 @@ public class ComentarioController {
 	@Autowired
 	private ComentarioService comentarioService;
 
+	/*----------------------------------------------------------------------------*/
+
+	/**
+	 * 
+	 * @param publicacionId
+	 * @return
+	 */
 	@GetMapping
-	public List<ComentarioDTO> listarComentariosPorPublicacionId(
+	public List<ComentarioRequestDTO> listarComentariosPorPublicacionId(
 			@PathVariable(value = "publicacionId") Long publicacionId) {
 		return comentarioService.obtenerComentariosPorPublicacionId(publicacionId);
 	}
 
+	/**
+	 * 
+	 * @param publicacionId
+	 * @param comentarioId
+	 * @return
+	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<ComentarioDTO> obtenerComentarioPorId(
+	public ResponseEntity<ComentarioRequestDTO> getComentarioById(
 			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId) {
-		ComentarioDTO comentarioDTO = comentarioService.obtenerComentarioPorId(publicacionId, comentarioId);
+		ComentarioRequestDTO comentarioDTO = comentarioService.getComentarioById(publicacionId, comentarioId);
 		return new ResponseEntity<>(comentarioDTO, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param publicacionId
+	 * @param comentarioDTO
+	 * @return
+	 */
 	@PostMapping
-	public ResponseEntity<ComentarioDTO> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
-			@Valid @RequestBody ComentarioDTO comentarioDTO) {
+	public ResponseEntity<ComentarioRequestDTO> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
+			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
 		return new ResponseEntity<>(comentarioService.crearComentario(publicacionId, comentarioDTO),
 				HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ComentarioDTO> actualizarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
-			@PathVariable(value = "id") Long comentarioId, @Valid @RequestBody ComentarioDTO comentarioDTO) {
-		ComentarioDTO comentarioActualizado = comentarioService.actualizarComentario(publicacionId, comentarioId,
+	public ResponseEntity<ComentarioRequestDTO> actualizarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
+			@PathVariable(value = "id") Long comentarioId, @Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
+		ComentarioRequestDTO comentarioActualizado = comentarioService.actualizarComentario(publicacionId, comentarioId,
 				comentarioDTO);
 		return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
 	}

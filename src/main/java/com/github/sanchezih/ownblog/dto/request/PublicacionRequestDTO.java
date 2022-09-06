@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 import com.github.sanchezih.ownblog.entity.Comentario;
 
-public class PublicacionReqDTO {
+public class PublicacionRequestDTO {
 
 	private Long id;
 
@@ -26,7 +26,7 @@ public class PublicacionReqDTO {
 
 	/*----------------------------------------------------------------------------*/
 
-	public PublicacionReqDTO() {
+	public PublicacionRequestDTO() {
 		super();
 	}
 

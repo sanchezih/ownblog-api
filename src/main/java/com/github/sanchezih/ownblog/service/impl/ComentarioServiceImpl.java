@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.ComentarioDTO;
+import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.excepciones.BlogAppException;
@@ -30,7 +30,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	private PublicacionRepository publicacionRepository;
 
 	@Override
-	public ComentarioDTO crearComentario(long publicacionId, ComentarioDTO comentarioDTO) {
+	public ComentarioRequestDTO crearComentario(long publicacionId, ComentarioRequestDTO comentarioDTO) {
 
 		Comentario comentario = mapearEntidad(comentarioDTO);
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
@@ -38,18 +38,18 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 		comentario.setPublicacion(publicacion);
 		Comentario nuevoComentario = comentarioRepository.save(comentario);
-		return mapearDTO(nuevoComentario);
+		return mapComentarioToComentarioDTO(nuevoComentario);
 	}
 
 	@Override
-	public List<ComentarioDTO> obtenerComentariosPorPublicacionId(long publicacionId) {
+	public List<ComentarioRequestDTO> obtenerComentariosPorPublicacionId(long publicacionId) {
 
 		List<Comentario> comentarios = comentarioRepository.findByPublicacionId(publicacionId);
-		return comentarios.stream().map(comentario -> mapearDTO(comentario)).collect(Collectors.toList());
+		return comentarios.stream().map(comentario -> mapComentarioToComentarioDTO(comentario)).collect(Collectors.toList());
 	}
 
 	@Override
-	public ComentarioDTO obtenerComentarioPorId(Long publicacionId, Long comentarioId) {
+	public ComentarioRequestDTO getComentarioById(Long publicacionId, Long comentarioId) {
 
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -61,12 +61,12 @@ public class ComentarioServiceImpl implements ComentarioService {
 			throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicacion");
 		}
 
-		return mapearDTO(comentario);
+		return mapComentarioToComentarioDTO(comentario);
 	}
 
 	@Override
-	public ComentarioDTO actualizarComentario(Long publicacionId, Long comentarioId,
-			ComentarioDTO solicitudDeComentario) {
+	public ComentarioRequestDTO actualizarComentario(Long publicacionId, Long comentarioId,
+			ComentarioRequestDTO solicitudDeComentario) {
 
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -83,7 +83,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 		comentario.setCuerpo(solicitudDeComentario.getCuerpo());
 
 		Comentario comentarioActualizado = comentarioRepository.save(comentario);
-		return mapearDTO(comentarioActualizado);
+		return mapComentarioToComentarioDTO(comentarioActualizado);
 	}
 
 	@Override
@@ -102,12 +102,12 @@ public class ComentarioServiceImpl implements ComentarioService {
 		comentarioRepository.delete(comentario);
 	}
 
-	private ComentarioDTO mapearDTO(Comentario comentario) {
-		ComentarioDTO comentarioDTO = modelMapper.map(comentario, ComentarioDTO.class);
+	private ComentarioRequestDTO mapComentarioToComentarioDTO(Comentario comentario) {
+		ComentarioRequestDTO comentarioDTO = modelMapper.map(comentario, ComentarioRequestDTO.class);
 		return comentarioDTO;
 	}
 
-	private Comentario mapearEntidad(ComentarioDTO comentarioDTO) {
+	private Comentario mapearEntidad(ComentarioRequestDTO comentarioDTO) {
 		Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
 		return comentario;
 	}

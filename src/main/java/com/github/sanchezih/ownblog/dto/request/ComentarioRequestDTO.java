@@ -1,12 +1,12 @@
-package com.github.sanchezih.ownblog.dto;
+package com.github.sanchezih.ownblog.dto.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class ComentarioDTO {
+public class ComentarioRequestDTO {
 
-	private long id;
+	// private long id;
 
 	@NotEmpty(message = "El nombre no debe ser vacio o nulo")
 	private String nombre;
@@ -19,13 +19,21 @@ public class ComentarioDTO {
 	@Size(min = 10, message = "El cuerpo del comentario debe tener al menos 10 caracteres")
 	private String cuerpo;
 
-	public long getId() {
-		return id;
+	/*----------------------------------------------------------------------------*/
+
+	public ComentarioRequestDTO() {
+		super();
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	/*----------------------------------------------------------------------------*/
+
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public void setId(long id) {
+//		this.id = id;
+//	}
 
 	public String getNombre() {
 		return nombre;
@@ -49,10 +57,6 @@ public class ComentarioDTO {
 
 	public void setCuerpo(String cuerpo) {
 		this.cuerpo = cuerpo;
-	}
-
-	public ComentarioDTO() {
-		super();
 	}
 
 }

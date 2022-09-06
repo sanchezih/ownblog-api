@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
-import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
+import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
+import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.excepciones.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
@@ -33,14 +33,14 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO addPublicacion(PublicacionReqDTO publicacionReqDTO) {
+	public PublicacionRequestDTO addPublicacion(PublicacionRequestDTO publicacionReqDTO) {
 
 		// Se convierte el DTO en entidad
 		Publicacion publicacion = mapPublicacionReqDTOToPublicacion(publicacionReqDTO);
 
 		Publicacion nuevaPublicacion = publicacionRepository.save(publicacion);
 
-		PublicacionReqDTO publicacionRespuesta = mapPublicacionToPublicacionRequestDTO(nuevaPublicacion);
+		PublicacionRequestDTO publicacionRespuesta = mapPublicacionToPublicacionRequestDTO(nuevaPublicacion);
 		return publicacionRespuesta;
 	}
 
@@ -48,20 +48,19 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionResDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
+	public PublicacionResponseDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir) {
 
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending()
-				: Sort.by(ordenarPor).descending();
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending(): Sort.by(ordenarPor).descending();
 		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
 
 		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
 
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
-		List<PublicacionReqDTO> contenido = listaDePublicaciones.stream()
+		List<PublicacionRequestDTO> contenido = listaDePublicaciones.stream()
 				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
 
-		PublicacionResDTO pubResp = new PublicacionResDTO();
+		PublicacionResponseDTO pubResp = new PublicacionResponseDTO();
 		pubResp.setContenido(contenido);
 		pubResp.setNumeroPagina(publicaciones.getNumber());
 		pubResp.setMedidaPagina(publicaciones.getSize());
@@ -79,7 +78,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	public Publicacion getOneById(long id) {
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
-		//return mapPublicacionToPublicacionRequestDTO(publicacion);
+		// return mapPublicacionToPublicacionRequestDTO(publicacion);
 		return publicacion;
 	}
 
@@ -87,7 +86,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionReqDTO updatePublicacion(PublicacionReqDTO publicacionRequestDTO, long id) {
+	public PublicacionRequestDTO updatePublicacion(PublicacionRequestDTO publicacionRequestDTO, long id) {
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 
@@ -115,8 +114,8 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * @param publicacion
 	 * @return
 	 */
-	private PublicacionReqDTO mapPublicacionToPublicacionRequestDTO(Publicacion publicacion) {
-		PublicacionReqDTO publicacionDTO = modelMapper.map(publicacion, PublicacionReqDTO.class);
+	private PublicacionRequestDTO mapPublicacionToPublicacionRequestDTO(Publicacion publicacion) {
+		PublicacionRequestDTO publicacionDTO = modelMapper.map(publicacion, PublicacionRequestDTO.class);
 		return publicacionDTO;
 	}
 
@@ -126,7 +125,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * @param publicacionRequestDTO
 	 * @return
 	 */
-	private Publicacion mapPublicacionReqDTOToPublicacion(PublicacionReqDTO publicacionRequestDTO) {
+	private Publicacion mapPublicacionReqDTOToPublicacion(PublicacionRequestDTO publicacionRequestDTO) {
 		Publicacion publicacion = modelMapper.map(publicacionRequestDTO, Publicacion.class);
 		return publicacion;
 	}

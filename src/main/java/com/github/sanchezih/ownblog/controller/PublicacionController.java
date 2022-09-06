@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
-import com.github.sanchezih.ownblog.dto.response.PublicacionResDTO;
-import com.github.sanchezih.ownblog.entity.Publicacion;
+import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
+import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 import com.github.sanchezih.ownblog.util.AppConstantes;
 
@@ -39,7 +38,7 @@ public class PublicacionController {
 	 * @return
 	 */
 	@GetMapping
-	public PublicacionResDTO getAllPublicaciones(
+	public PublicacionResponseDTO getAllPublicaciones(
 
 			@RequestParam(value = "pageSize", defaultValue = AppConstantes.MEDIDA_DE_PAGINA_POR_DEFECTO, required = false) int medidaDePagina,
 			@RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false) int numeroDePagina,
@@ -65,7 +64,7 @@ public class PublicacionController {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<PublicacionReqDTO> addPublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO) {
+	public ResponseEntity<PublicacionRequestDTO> addPublicacion(@Valid @RequestBody PublicacionRequestDTO publicacionDTO) {
 		return new ResponseEntity<>(publicacionService.addPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
@@ -76,9 +75,9 @@ public class PublicacionController {
 	 * @return
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<PublicacionReqDTO> updatePublicacion(@Valid @RequestBody PublicacionReqDTO publicacionDTO,
+	public ResponseEntity<PublicacionRequestDTO> updatePublicacion(@Valid @RequestBody PublicacionRequestDTO publicacionDTO,
 			@PathVariable(name = "id") long id) {
-		PublicacionReqDTO publicacionRespuesta = publicacionService.updatePublicacion(publicacionDTO, id);
+		PublicacionRequestDTO publicacionRespuesta = publicacionService.updatePublicacion(publicacionDTO, id);
 		return new ResponseEntity<>(publicacionRespuesta, HttpStatus.OK);
 	}
 

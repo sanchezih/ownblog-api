@@ -2,11 +2,11 @@ package com.github.sanchezih.ownblog.dto.response;
 
 import java.util.List;
 
-import com.github.sanchezih.ownblog.dto.request.PublicacionReqDTO;
+import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
 
-public class PublicacionResDTO {
+public class PublicacionResponseDTO {
 
-	private List<PublicacionReqDTO> contenido;
+	private List<PublicacionRequestDTO> contenido;
 	private int numeroPagina;
 	private int medidaPagina;
 	private long totalElementos;
@@ -15,17 +15,17 @@ public class PublicacionResDTO {
 
 	/*----------------------------------------------------------------------------*/
 
-	public PublicacionResDTO() {
+	public PublicacionResponseDTO() {
 		super();
 	}
 
 	/*----------------------------------------------------------------------------*/
 
-	public List<PublicacionReqDTO> getContenido() {
+	public List<PublicacionRequestDTO> getContenido() {
 		return contenido;
 	}
 
-	public void setContenido(List<PublicacionReqDTO> contenido) {
+	public void setContenido(List<PublicacionRequestDTO> contenido) {
 		this.contenido = contenido;
 	}
 
