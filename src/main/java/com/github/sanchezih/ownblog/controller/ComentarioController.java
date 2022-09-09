@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
+import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.service.ComentarioService;
 
 @RestController
@@ -46,10 +47,10 @@ public class ComentarioController {
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<ComentarioRequestDTO> getComentarioById(
-			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId) {
-		ComentarioRequestDTO comentarioDTO = comentarioService.getComentarioById(publicacionId, comentarioId);
-		return new ResponseEntity<>(comentarioDTO, HttpStatus.OK);
+	public ResponseEntity<Comentario> getComentarioById(@PathVariable(value = "publicacionId") Long publicacionId,
+			@PathVariable(value = "id") Long comentarioId) {
+		Comentario comentario = comentarioService.getComentarioById(publicacionId, comentarioId);
+		return new ResponseEntity<>(comentario, HttpStatus.OK);
 	}
 
 	/**
@@ -59,16 +60,17 @@ public class ComentarioController {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<ComentarioRequestDTO> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
+	public ResponseEntity<Comentario> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
-		return new ResponseEntity<>(comentarioService.crearComentario(publicacionId, comentarioDTO),
+		return new ResponseEntity<>(comentarioService.addComentario(publicacionId, comentarioDTO),
 				HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ComentarioRequestDTO> actualizarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
-			@PathVariable(value = "id") Long comentarioId, @Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
-		ComentarioRequestDTO comentarioActualizado = comentarioService.actualizarComentario(publicacionId, comentarioId,
+	public ResponseEntity<ComentarioRequestDTO> actualizarComentario(
+			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId,
+			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
+		ComentarioRequestDTO comentarioActualizado = comentarioService.updateComentario(publicacionId, comentarioId,
 				comentarioDTO);
 		return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
 	}
@@ -76,7 +78,7 @@ public class ComentarioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> eliminarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
-		comentarioService.eliminarComentario(publicacionId, comentarioId);
+		comentarioService.deleteComentario(publicacionId, comentarioId);
 		return new ResponseEntity<>("Comentario eliminado con exito", HttpStatus.OK);
 	}
 }

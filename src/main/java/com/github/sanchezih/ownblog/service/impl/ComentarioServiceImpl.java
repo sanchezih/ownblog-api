@@ -16,6 +16,7 @@ import com.github.sanchezih.ownblog.excepciones.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.ComentarioRepository;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
 import com.github.sanchezih.ownblog.service.ComentarioService;
+import com.github.sanchezih.ownblog.service.PublicacionService;
 
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
@@ -29,27 +30,38 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Autowired
 	private PublicacionRepository publicacionRepository;
 
+	@Autowired
+	private PublicacionService publicacionService;
+
+	/**
+	 * 
+	 */
 	@Override
-	public ComentarioRequestDTO crearComentario(long publicacionId, ComentarioRequestDTO comentarioDTO) {
+	public Comentario addComentario(long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
 
-		Comentario comentario = mapearEntidad(comentarioDTO);
-		Publicacion publicacion = publicacionRepository.findById(publicacionId)
-				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
+		Publicacion publicacion = publicacionService.getOneById(publicacionId);
 
-		comentario.setPublicacion(publicacion);
-		Comentario nuevoComentario = comentarioRepository.save(comentario);
-		return mapComentarioToComentarioDTO(nuevoComentario);
+		Comentario c = mapComentarioRequestDTOToComentario(comentarioRequestDTO);
+		c.setPublicacion(publicacion);
+
+		Comentario comentarioGuardado = comentarioRepository.save(c);
+		return comentarioGuardado;
+
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public List<ComentarioRequestDTO> obtenerComentariosPorPublicacionId(long publicacionId) {
 
 		List<Comentario> comentarios = comentarioRepository.findByPublicacionId(publicacionId);
-		return comentarios.stream().map(comentario -> mapComentarioToComentarioDTO(comentario)).collect(Collectors.toList());
+		return comentarios.stream().map(comentario -> mapComentarioToComentarioDTO(comentario))
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	public ComentarioRequestDTO getComentarioById(Long publicacionId, Long comentarioId) {
+	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
 
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -61,11 +73,12 @@ public class ComentarioServiceImpl implements ComentarioService {
 			throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicacion");
 		}
 
-		return mapComentarioToComentarioDTO(comentario);
+		// return mapComentarioToComentarioDTO(comentario);
+		return comentario;
 	}
 
 	@Override
-	public ComentarioRequestDTO actualizarComentario(Long publicacionId, Long comentarioId,
+	public ComentarioRequestDTO updateComentario(Long publicacionId, Long comentarioId,
 			ComentarioRequestDTO solicitudDeComentario) {
 
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
@@ -87,7 +100,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	}
 
 	@Override
-	public void eliminarComentario(Long publicacionId, Long comentarioId) {
+	public void deleteComentario(Long publicacionId, Long comentarioId) {
 
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -102,13 +115,14 @@ public class ComentarioServiceImpl implements ComentarioService {
 		comentarioRepository.delete(comentario);
 	}
 
+	private Comentario mapComentarioRequestDTOToComentario(ComentarioRequestDTO comentarioRequestDTO) {
+		Comentario comentario = modelMapper.map(comentarioRequestDTO, Comentario.class);
+		return comentario;
+	}
+
 	private ComentarioRequestDTO mapComentarioToComentarioDTO(Comentario comentario) {
 		ComentarioRequestDTO comentarioDTO = modelMapper.map(comentario, ComentarioRequestDTO.class);
 		return comentarioDTO;
 	}
 
-	private Comentario mapearEntidad(ComentarioRequestDTO comentarioDTO) {
-		Comentario comentario = modelMapper.map(comentarioDTO, Comentario.class);
-		return comentario;
-	}
 }
