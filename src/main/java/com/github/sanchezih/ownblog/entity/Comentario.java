@@ -1,5 +1,6 @@
 package com.github.sanchezih.ownblog.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ public class Comentario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@Column(name = "comentario_id")
+	@Column(name = "comentario_id")
 	private long id;
 
 	private String nombre;

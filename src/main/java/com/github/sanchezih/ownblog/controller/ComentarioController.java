@@ -62,10 +62,16 @@ public class ComentarioController {
 	@PostMapping
 	public ResponseEntity<Comentario> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
-		return new ResponseEntity<>(comentarioService.addComentario(publicacionId, comentarioDTO),
-				HttpStatus.CREATED);
+		return new ResponseEntity<>(comentarioService.addComentario(publicacionId, comentarioDTO), HttpStatus.CREATED);
 	}
 
+	/**
+	 * 
+	 * @param publicacionId
+	 * @param comentarioId
+	 * @param comentarioDTO
+	 * @return
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<ComentarioRequestDTO> actualizarComentario(
 			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId,
@@ -75,6 +81,12 @@ public class ComentarioController {
 		return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
 	}
 
+	/**
+	 * 
+	 * @param publicacionId
+	 * @param comentarioId
+	 * @return
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> eliminarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
