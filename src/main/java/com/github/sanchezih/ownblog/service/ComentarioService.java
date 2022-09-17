@@ -7,14 +7,19 @@ import com.github.sanchezih.ownblog.entity.Comentario;
 
 public interface ComentarioService {
 
+	// Save operation
 	public Comentario createComentario(long publicacionId, ComentarioRequestDTO comentarioDTO);
 
-	public List<ComentarioRequestDTO> obtenerComentariosPorPublicacionId(long publicacionId);
+	// Read operation
+	public List<ComentarioRequestDTO> getAllComentariosByPublicacionId(long publicacionId);
 
+	// Read operation
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId);
 
+	// Update operation
 	public ComentarioRequestDTO updateComentario(Long publicacionId, Long comentarioId,
 			ComentarioRequestDTO solicitudDeComentario);
 
+	// Delete operation
 	public void deleteComentario(Long publicacionId, Long comentarioId);
 }

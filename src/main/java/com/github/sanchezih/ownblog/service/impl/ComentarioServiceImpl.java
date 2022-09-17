@@ -53,7 +53,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	 * 
 	 */
 	@Override
-	public List<ComentarioRequestDTO> obtenerComentariosPorPublicacionId(long publicacionId) {
+	public List<ComentarioRequestDTO> getAllComentariosByPublicacionId(long publicacionId) {
 
 		List<Comentario> comentarios = comentarioRepository.findByPublicacionId(publicacionId);
 		return comentarios.stream().map(comentario -> mapComentarioToComentarioDTO(comentario))

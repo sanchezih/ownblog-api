@@ -32,37 +32,39 @@ public class ComentarioController {
 	/**
 	 * 
 	 * @param publicacionId
+	 * @param comentarioDTO
 	 * @return
 	 */
-	@GetMapping
-	public List<ComentarioRequestDTO> listarComentariosPorPublicacionId(
-			@PathVariable(value = "publicacionId") Long publicacionId) {
-		return comentarioService.obtenerComentariosPorPublicacionId(publicacionId);
+	@PostMapping
+	public ResponseEntity<Comentario> createComentario(@PathVariable(value = "publicacionId") long publicacionId,
+			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
+		return new ResponseEntity<>(comentarioService.createComentario(publicacionId, comentarioDTO),
+				HttpStatus.CREATED);
 	}
 
 	/**
+	 * Metodo que retorna un comentario en base a su id
 	 * 
 	 * @param publicacionId
 	 * @param comentarioId
 	 * @return
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Comentario> getComentarioById(@PathVariable(value = "publicacionId") Long publicacionId,
+	public Comentario getComentarioById(@PathVariable(value = "publicacionId") Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
 		Comentario comentario = comentarioService.getComentarioById(publicacionId, comentarioId);
-		return new ResponseEntity<>(comentario, HttpStatus.OK);
+		return comentario;
 	}
 
 	/**
 	 * 
 	 * @param publicacionId
-	 * @param comentarioDTO
 	 * @return
 	 */
-	@PostMapping
-	public ResponseEntity<Comentario> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
-			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
-		return new ResponseEntity<>(comentarioService.createComentario(publicacionId, comentarioDTO), HttpStatus.CREATED);
+	@GetMapping
+	public List<ComentarioRequestDTO> getAllComentariosByPublicacionId(
+			@PathVariable(value = "publicacionId") Long publicacionId) {
+		return comentarioService.getAllComentariosByPublicacionId(publicacionId);
 	}
 
 	/**
@@ -82,15 +84,16 @@ public class ComentarioController {
 	}
 
 	/**
+	 * Metodo que elimina un comentario de una publicacion
 	 * 
 	 * @param publicacionId
 	 * @param comentarioId
 	 * @return
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> eliminarComentario(@PathVariable(value = "publicacionId") Long publicacionId,
+	public ResponseEntity<String> eliminarComentario(@PathVariable Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
 		comentarioService.deleteComentario(publicacionId, comentarioId);
-		return new ResponseEntity<>("Comentario eliminado con exito", HttpStatus.OK);
+		return ResponseEntity.noContent().build();
 	}
 }
