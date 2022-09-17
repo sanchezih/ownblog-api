@@ -6,7 +6,7 @@ import com.github.sanchezih.ownblog.entity.Publicacion;
 
 public interface PublicacionService {
 
-	public PublicacionRequestDTO addPublicacion(PublicacionRequestDTO publicacionRequestDTO);
+	public PublicacionRequestDTO createPublicacion(PublicacionRequestDTO publicacionRequestDTO);
 
 	public PublicacionResponseDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
 			String sortDir);

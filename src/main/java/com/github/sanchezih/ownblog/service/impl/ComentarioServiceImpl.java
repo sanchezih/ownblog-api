@@ -37,7 +37,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	 * 
 	 */
 	@Override
-	public Comentario addComentario(long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
+	public Comentario createComentario(long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
 
 		Publicacion publicacion = publicacionService.getOneById(publicacionId);
 
@@ -60,6 +60,9 @@ public class ComentarioServiceImpl implements ComentarioService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
 
@@ -77,6 +80,9 @@ public class ComentarioServiceImpl implements ComentarioService {
 		return comentario;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public ComentarioRequestDTO updateComentario(Long publicacionId, Long comentarioId,
 			ComentarioRequestDTO solicitudDeComentario) {
@@ -99,6 +105,9 @@ public class ComentarioServiceImpl implements ComentarioService {
 		return mapComentarioToComentarioDTO(comentarioActualizado);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void deleteComentario(Long publicacionId, Long comentarioId) {
 
@@ -115,11 +124,21 @@ public class ComentarioServiceImpl implements ComentarioService {
 		comentarioRepository.delete(comentario);
 	}
 
+	/**
+	 * 
+	 * @param comentarioRequestDTO
+	 * @return
+	 */
 	private Comentario mapComentarioRequestDTOToComentario(ComentarioRequestDTO comentarioRequestDTO) {
 		Comentario comentario = modelMapper.map(comentarioRequestDTO, Comentario.class);
 		return comentario;
 	}
 
+	/**
+	 * 
+	 * @param comentario
+	 * @return
+	 */
 	private ComentarioRequestDTO mapComentarioToComentarioDTO(Comentario comentario) {
 		ComentarioRequestDTO comentarioDTO = modelMapper.map(comentario, ComentarioRequestDTO.class);
 		return comentarioDTO;

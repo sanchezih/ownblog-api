@@ -33,7 +33,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionRequestDTO addPublicacion(PublicacionRequestDTO publicacionReqDTO) {
+	public PublicacionRequestDTO createPublicacion(PublicacionRequestDTO publicacionReqDTO) {
 
 		// Se convierte el DTO en entidad
 		Publicacion publicacion = mapPublicacionReqDTOToPublicacion(publicacionReqDTO);

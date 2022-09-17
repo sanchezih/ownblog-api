@@ -62,7 +62,7 @@ public class ComentarioController {
 	@PostMapping
 	public ResponseEntity<Comentario> guardarComentario(@PathVariable(value = "publicacionId") long publicacionId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
-		return new ResponseEntity<>(comentarioService.addComentario(publicacionId, comentarioDTO), HttpStatus.CREATED);
+		return new ResponseEntity<>(comentarioService.createComentario(publicacionId, comentarioDTO), HttpStatus.CREATED);
 	}
 
 	/**

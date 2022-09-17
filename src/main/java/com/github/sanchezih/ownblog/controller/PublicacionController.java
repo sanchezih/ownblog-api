@@ -20,6 +20,8 @@ import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 import com.github.sanchezih.ownblog.util.AppConstantes;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/publicaciones")
 public class PublicacionController {
@@ -37,6 +39,7 @@ public class PublicacionController {
 	 * @param sortDir
 	 * @return
 	 */
+	@ApiOperation(value = "Obtener todas las publicaciones", notes = "Retorna todas las publicaciones existentes al momento")
 	@GetMapping
 	public PublicacionResponseDTO getAllPublicaciones(
 
@@ -64,8 +67,9 @@ public class PublicacionController {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<PublicacionRequestDTO> addPublicacion(@Valid @RequestBody PublicacionRequestDTO publicacionDTO) {
-		return new ResponseEntity<>(publicacionService.addPublicacion(publicacionDTO), HttpStatus.CREATED);
+	public ResponseEntity<PublicacionRequestDTO> createPublicacion(
+			@Valid @RequestBody PublicacionRequestDTO publicacionDTO) {
+		return new ResponseEntity<>(publicacionService.createPublicacion(publicacionDTO), HttpStatus.CREATED);
 	}
 
 	/**
@@ -75,8 +79,8 @@ public class PublicacionController {
 	 * @return
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<PublicacionRequestDTO> updatePublicacion(@Valid @RequestBody PublicacionRequestDTO publicacionDTO,
-			@PathVariable(name = "id") long id) {
+	public ResponseEntity<PublicacionRequestDTO> updatePublicacion(
+			@Valid @RequestBody PublicacionRequestDTO publicacionDTO, @PathVariable(name = "id") long id) {
 		PublicacionRequestDTO publicacionRespuesta = publicacionService.updatePublicacion(publicacionDTO, id);
 		return new ResponseEntity<>(publicacionRespuesta, HttpStatus.OK);
 	}

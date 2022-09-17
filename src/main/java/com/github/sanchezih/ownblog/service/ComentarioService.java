@@ -7,7 +7,7 @@ import com.github.sanchezih.ownblog.entity.Comentario;
 
 public interface ComentarioService {
 
-	public Comentario addComentario(long publicacionId, ComentarioRequestDTO comentarioDTO);
+	public Comentario createComentario(long publicacionId, ComentarioRequestDTO comentarioDTO);
 
 	public List<ComentarioRequestDTO> obtenerComentariosPorPublicacionId(long publicacionId);
 
