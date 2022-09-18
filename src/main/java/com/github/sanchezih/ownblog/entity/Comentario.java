@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "comentario")
 public class Comentario {
@@ -23,13 +25,18 @@ public class Comentario {
 	private String email;
 	private String cuerpo;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id", nullable = false)
 	private Publicacion publicacion;
 
+	/*----------------------------------------------------------------------------*/
+
 	public Comentario() {
 		super();
 	}
+
+	/*----------------------------------------------------------------------------*/
 
 	public long getId() {
 		return id;

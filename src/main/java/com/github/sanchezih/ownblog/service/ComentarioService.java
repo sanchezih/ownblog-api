@@ -11,7 +11,7 @@ public interface ComentarioService {
 	public Comentario createComentario(long publicacionId, ComentarioRequestDTO comentarioDTO);
 
 	// Read operation
-	public List<ComentarioRequestDTO> getAllComentariosByPublicacionId(long publicacionId);
+	public List<Comentario> getAllComentariosByPublicacionId(long publicacionId);
 
 	// Read operation
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId);

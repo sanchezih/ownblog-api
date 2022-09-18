@@ -29,7 +29,6 @@ public class ComentarioController {
 
 	/*----------------------------------------------------------------------------*/
 
-	
 	/**
 	 * 
 	 * @param publicacionId
@@ -63,7 +62,7 @@ public class ComentarioController {
 	 * @return
 	 */
 	@GetMapping
-	public List<ComentarioRequestDTO> getAllComentariosByPublicacionId(
+	public List<Comentario> getAllComentariosByPublicacionId(
 			@PathVariable(value = "publicacionId") Long publicacionId) {
 		return comentarioService.getAllComentariosByPublicacionId(publicacionId);
 	}
