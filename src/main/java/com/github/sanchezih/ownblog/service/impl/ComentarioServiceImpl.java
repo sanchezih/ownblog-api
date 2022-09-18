@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.entity.Publicacion;
-
 import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
 import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.ComentarioRepository;
@@ -20,6 +18,8 @@ import com.github.sanchezih.ownblog.service.PublicacionService;
 
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
+
+	public static final String COMENTARIO_NO_PERTENECE = "El comentario no pertenece a la publicacion";
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -67,12 +67,14 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
 
-		Publicacion publicacion = publicacionRepository.findById(publicacionId).orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
+		Publicacion publicacion = publicacionRepository.findById(publicacionId)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
-		Comentario comentario = comentarioRepository.findById(comentarioId).orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
+		Comentario comentario = comentarioRepository.findById(comentarioId)
+				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BadRequestException("El comentario no pertenece a la publicacion");
+			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}
 
 		return comentario;
@@ -92,7 +94,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BadRequestException("El comentario no pertenece a la publicacion");
+			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}
 
 		comentario.setNombre(solicitudDeComentario.getNombre());
@@ -116,7 +118,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BadRequestException("El comentario no pertenece a la publicacion");
+			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}
 
 		comentarioRepository.delete(comentario);
