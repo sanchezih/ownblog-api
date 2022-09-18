@@ -1,7 +1,6 @@
 package com.github.sanchezih.ownblog.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,9 @@ import org.springframework.stereotype.Service;
 import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.entity.Publicacion;
-import com.github.sanchezih.ownblog.excepciones.BlogAppException;
-import com.github.sanchezih.ownblog.excepciones.ResourceNotFoundException;
+
+import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
+import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.ComentarioRepository;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
 import com.github.sanchezih.ownblog.service.ComentarioService;
@@ -57,7 +57,8 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 		List<Comentario> comentarios = comentarioRepository.findByPublicacionId(publicacionId);
 		return comentarios;
-	//	return comentarios.stream().map(comentario -> mapComentarioToComentarioDTO(comentario)).collect(Collectors.toList());
+		// return comentarios.stream().map(comentario ->
+		// mapComentarioToComentarioDTO(comentario)).collect(Collectors.toList());
 	}
 
 	/**
@@ -66,17 +67,14 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
 
-		Publicacion publicacion = publicacionRepository.findById(publicacionId)
-				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
+		Publicacion publicacion = publicacionRepository.findById(publicacionId).orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
-		Comentario comentario = comentarioRepository.findById(comentarioId)
-				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
+		Comentario comentario = comentarioRepository.findById(comentarioId).orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicacion");
+			throw new BadRequestException("El comentario no pertenece a la publicacion");
 		}
 
-		// return mapComentarioToComentarioDTO(comentario);
 		return comentario;
 	}
 
@@ -94,7 +92,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicacion");
+			throw new BadRequestException("El comentario no pertenece a la publicacion");
 		}
 
 		comentario.setNombre(solicitudDeComentario.getNombre());
@@ -118,7 +116,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
-			throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicacion");
+			throw new BadRequestException("El comentario no pertenece a la publicacion");
 		}
 
 		comentarioRepository.delete(comentario);

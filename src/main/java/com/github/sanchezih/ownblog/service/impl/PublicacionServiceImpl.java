@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
 import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
-import com.github.sanchezih.ownblog.excepciones.ResourceNotFoundException;
+import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 
