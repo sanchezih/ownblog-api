@@ -75,7 +75,7 @@ public class ComentarioController {
 	 * @return
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<ComentarioRequestDTO> actualizarComentario(
+	public ResponseEntity<ComentarioRequestDTO> updateComentario(
 			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
 		ComentarioRequestDTO comentarioActualizado = comentarioService.updateComentario(publicacionId, comentarioId,
