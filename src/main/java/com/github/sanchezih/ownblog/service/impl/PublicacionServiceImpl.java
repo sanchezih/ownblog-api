@@ -48,15 +48,19 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 * 
 	 */
 	@Override
-	public PublicacionResponseDTO getAllPublicaciones(int numeroDePagina, int medidaDePagina, String ordenarPor,
-			String sortDir) {
+	public PublicacionResponseDTO getAllPublicaciones(int pageNo, int pageSize, String sortBy, String sortDir) {
 
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(ordenarPor).ascending(): Sort.by(ordenarPor).descending();
-		Pageable pageable = PageRequest.of(numeroDePagina, medidaDePagina, sort);
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		// create Pageable instance
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
 		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
 
+		// get content for page object
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
+		
 		List<PublicacionRequestDTO> contenido = listaDePublicaciones.stream()
 				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
 

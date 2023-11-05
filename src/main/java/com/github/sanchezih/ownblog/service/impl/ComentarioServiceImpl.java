@@ -19,7 +19,7 @@ import com.github.sanchezih.ownblog.service.PublicacionService;
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
 
-	public static final String COMENTARIO_NO_PERTENECE = "El comentario no pertenece a la publicacion";
+	private static final String COMENTARIO_NO_PERTENECE = "El comentario no pertenece a la publicacion";
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -41,10 +41,10 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 		Publicacion publicacion = publicacionService.getOneById(publicacionId);
 
-		Comentario c = mapComentarioRequestDTOToComentario(comentarioRequestDTO);
-		c.setPublicacion(publicacion);
+		Comentario comentario = mapComentarioRequestDTOToComentario(comentarioRequestDTO);
+		comentario.setPublicacion(publicacion);
 
-		Comentario comentarioGuardado = comentarioRepository.save(c);
+		Comentario comentarioGuardado = comentarioRepository.save(comentario);
 		return comentarioGuardado;
 
 	}
@@ -55,10 +55,11 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public List<Comentario> getAllComentariosByPublicacionId(long publicacionId) {
 
-		List<Comentario> comentarios = comentarioRepository.findByPublicacionId(publicacionId);
-		return comentarios;
-		// return comentarios.stream().map(comentario ->
-		// mapComentarioToComentarioDTO(comentario)).collect(Collectors.toList());
+		// Busco si la publicacion existe
+		publicacionRepository.findById(publicacionId)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
+
+		return comentarioRepository.findByPublicacionId(publicacionId);
 	}
 
 	/**
@@ -67,12 +68,15 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
 
+		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
+		// Busco si el comentario existe
 		Comentario comentario = comentarioRepository.findById(comentarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
+		// Busco si el comentario pertenece a la publicacion
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
 			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}
@@ -87,12 +91,15 @@ public class ComentarioServiceImpl implements ComentarioService {
 	public ComentarioRequestDTO updateComentario(Long publicacionId, Long comentarioId,
 			ComentarioRequestDTO solicitudDeComentario) {
 
+		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
+		// Busco si el comentario existe
 		Comentario comentario = comentarioRepository.findById(comentarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
+		// Busco si el comentario pertenece a la publicacion
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
 			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}
@@ -111,12 +118,15 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public void deleteComentario(Long publicacionId, Long comentarioId) {
 
+		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
+		// Busco si el comentario existe
 		Comentario comentario = comentarioRepository.findById(comentarioId)
 				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
 
+		// Busco si el comentario pertenece a la publicacion
 		if (!comentario.getPublicacion().getId().equals(publicacion.getId())) {
 			throw new BadRequestException(COMENTARIO_NO_PERTENECE);
 		}

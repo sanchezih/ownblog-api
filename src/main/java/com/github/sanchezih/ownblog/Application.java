@@ -21,11 +21,27 @@ public class Application {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
+	/**
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@EventListener
 	public void handleContextRefresh(ContextRefreshedEvent event) {
 		final Environment env = event.getApplicationContext().getEnvironment();
@@ -40,7 +56,4 @@ public class Application {
 				.forEach(prop -> LOGGER.info("{}: {}", prop, env.getProperty(prop)));
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
 }

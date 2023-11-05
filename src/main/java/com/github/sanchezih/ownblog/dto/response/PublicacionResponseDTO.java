@@ -7,11 +7,11 @@ import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
 public class PublicacionResponseDTO {
 
 	private List<PublicacionRequestDTO> contenido;
-	private int numeroPagina;
-	private int medidaPagina;
-	private long totalElementos;
-	private int totalPaginas;
-	private boolean ultima;
+	private int pageNo;
+	private int pageSize;
+	private long totalElements;
+	private int totalPages;
+	private boolean last;
 
 	/*----------------------------------------------------------------------------*/
 
@@ -30,43 +30,43 @@ public class PublicacionResponseDTO {
 	}
 
 	public int getNumeroPagina() {
-		return numeroPagina;
+		return pageNo;
 	}
 
 	public void setNumeroPagina(int numeroPagina) {
-		this.numeroPagina = numeroPagina;
+		this.pageNo = numeroPagina;
 	}
 
 	public int getMedidaPagina() {
-		return medidaPagina;
+		return pageSize;
 	}
 
 	public void setMedidaPagina(int medidaPagina) {
-		this.medidaPagina = medidaPagina;
+		this.pageSize = medidaPagina;
 	}
 
 	public long getTotalElementos() {
-		return totalElementos;
+		return totalElements;
 	}
 
 	public void setTotalElementos(long totalElementos) {
-		this.totalElementos = totalElementos;
+		this.totalElements = totalElementos;
 	}
 
 	public int getTotalPaginas() {
-		return totalPaginas;
+		return totalPages;
 	}
 
 	public void setTotalPaginas(int totalPaginas) {
-		this.totalPaginas = totalPaginas;
+		this.totalPages = totalPaginas;
 	}
 
 	public boolean isUltima() {
-		return ultima;
+		return last;
 	}
 
 	public void setUltima(boolean ultima) {
-		this.ultima = ultima;
+		this.last = ultima;
 	}
 
 }
