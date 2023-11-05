@@ -16,6 +16,10 @@ public class SwaggerConfig {
 
 	private final static String BASE_PACKAGE = "com.github.sanchezih.ownblog.controller";
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)//
@@ -25,6 +29,10 @@ public class SwaggerConfig {
 				.build().apiInfo(getApiInfo()); //
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder() //
 				.title("OwnBlog API") //

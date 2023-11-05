@@ -20,6 +20,11 @@ import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.service.ComentarioService;
 
+/**
+ * 
+ * @author ihsanch
+ *
+ */
 @RestController
 @RequestMapping("/api/publicaciones/{publicacionId}/comentarios")
 public class ComentarioController {
@@ -52,6 +57,7 @@ public class ComentarioController {
 	@GetMapping("/{id}")
 	public Comentario getComentarioById(@PathVariable(value = "publicacionId") Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
+
 		Comentario comentario = comentarioService.getComentarioById(publicacionId, comentarioId);
 		return comentario;
 	}
@@ -64,9 +70,14 @@ public class ComentarioController {
 	@GetMapping
 	public ResponseEntity<List<Comentario>> getAllComentariosByPublicacionId(
 			@PathVariable(value = "publicacionId") Long publicacionId) {
-		List<Comentario> res = comentarioService.getAllComentariosByPublicacionId(publicacionId);
-		// return res;
-		return !res.isEmpty() ? new ResponseEntity<>(res, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+		List<Comentario> comentarios = comentarioService.getAllComentariosByPublicacionId(publicacionId);
+
+		return !comentarios.isEmpty() ? ResponseEntity.ok(comentarios) : ResponseEntity.noContent().build();
+
+		// Otra forma de ponerlo:
+		// return !comentarios.isEmpty() ? new ResponseEntity<>(comentarios,
+		// HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	/**
@@ -80,6 +91,7 @@ public class ComentarioController {
 	public ResponseEntity<ComentarioRequestDTO> updateComentario(
 			@PathVariable(value = "publicacionId") Long publicacionId, @PathVariable(value = "id") Long comentarioId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
+
 		ComentarioRequestDTO comentarioActualizado = comentarioService.updateComentario(publicacionId, comentarioId,
 				comentarioDTO);
 		return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
@@ -95,6 +107,7 @@ public class ComentarioController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> eliminarComentario(@PathVariable Long publicacionId,
 			@PathVariable(value = "id") Long comentarioId) {
+
 		comentarioService.deleteComentario(publicacionId, comentarioId);
 		return ResponseEntity.noContent().build();
 	}
