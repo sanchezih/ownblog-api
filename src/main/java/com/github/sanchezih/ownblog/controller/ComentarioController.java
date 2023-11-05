@@ -62,11 +62,11 @@ public class ComentarioController {
 	 * @return
 	 */
 	@GetMapping
-	public List<Comentario> getAllComentariosByPublicacionId(
+	public ResponseEntity<List<Comentario>> getAllComentariosByPublicacionId(
 			@PathVariable(value = "publicacionId") Long publicacionId) {
 		List<Comentario> res = comentarioService.getAllComentariosByPublicacionId(publicacionId);
-		return res;
-		//return !res.isEmpty() ? new ResponseEntity<>(res, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		// return res;
+		return !res.isEmpty() ? new ResponseEntity<>(res, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	/**
