@@ -21,8 +21,12 @@ public class Comentario {
 	@Column(name = "comentario_id")
 	private long id;
 
+	@Column(name = "nombre", length = 60, nullable = false)
 	private String nombre;
+
+	@Column(name = "email", length = 60, nullable = false, unique = true)
 	private String email;
+
 	private String cuerpo;
 
 	@JsonIgnore
@@ -33,7 +37,6 @@ public class Comentario {
 	/*----------------------------------------------------------------------------*/
 
 	public Comentario() {
-		super();
 	}
 
 	/*----------------------------------------------------------------------------*/

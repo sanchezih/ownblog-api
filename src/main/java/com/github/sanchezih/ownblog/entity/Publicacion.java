@@ -40,11 +40,9 @@ public class Publicacion {
 	/*----------------------------------------------------------------------------*/
 
 	public Publicacion() {
-		super();
 	}
 
 	public Publicacion(Long id, String titulo, String descripcion, String contenido) {
-		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;

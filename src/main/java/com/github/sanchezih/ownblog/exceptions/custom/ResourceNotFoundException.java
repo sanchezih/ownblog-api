@@ -17,7 +17,6 @@ public class ResourceNotFoundException extends RuntimeException {
 		this.nombreDelRecurso = nombreDelRecurso;
 		this.nombreDelCampo = nombreDelCampo;
 		this.valorDelCampo = valorDelCampo;
-
 	}
 
 }

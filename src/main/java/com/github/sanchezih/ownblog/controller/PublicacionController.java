@@ -22,7 +22,7 @@ import com.github.sanchezih.ownblog.service.PublicacionService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/publicaciones")
+@RequestMapping("/v1/publicaciones")
 public class PublicacionController {
 
 	private static final String NUMERO_DE_PAGINA_POR_DEFECTO = "0";
@@ -60,6 +60,7 @@ public class PublicacionController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Obtener una publicacion", notes = "Retorna una publicacion")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPublicacion(@PathVariable(name = "id") long id) {
 		return ResponseEntity.ok(publicacionService.getOneById(id));
@@ -70,6 +71,7 @@ public class PublicacionController {
 	 * @param publicacionDTO
 	 * @return
 	 */
+	@ApiOperation(value = "Crear una publicacion", notes = "xyz...")
 	@PostMapping
 	public ResponseEntity<PublicacionRequestDTO> createPublicacion(
 			@Valid @RequestBody PublicacionRequestDTO publicacionDTO) {

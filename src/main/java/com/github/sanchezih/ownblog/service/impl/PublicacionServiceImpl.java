@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
 import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
+import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
 import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
 import com.github.sanchezih.ownblog.service.PublicacionService;
@@ -60,7 +61,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 
 		// get content for page object
 		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
-		
+
 		List<PublicacionRequestDTO> contenido = listaDePublicaciones.stream()
 				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
 
@@ -81,8 +82,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	@Override
 	public Publicacion getOneById(long id) {
 		Publicacion publicacion = publicacionRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
-		// return mapPublicacionToPublicacionRequestDTO(publicacion);
+				.orElseThrow(() -> new BadRequestException("Invalid id"));
 		return publicacion;
 	}
 

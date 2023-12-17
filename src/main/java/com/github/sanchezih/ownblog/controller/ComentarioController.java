@@ -26,7 +26,7 @@ import com.github.sanchezih.ownblog.service.ComentarioService;
  *
  */
 @RestController
-@RequestMapping("/api/publicaciones/{publicacionId}/comentarios")
+@RequestMapping("/v1/publicaciones/{publicacionId}/comentarios")
 public class ComentarioController {
 
 	@Autowired
