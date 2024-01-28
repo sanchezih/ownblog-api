@@ -33,6 +33,8 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Autowired
 	private PublicacionService publicacionService;
 
+	/*----------------------------------------------------------------------------*/
+
 	/**
 	 * 
 	 */

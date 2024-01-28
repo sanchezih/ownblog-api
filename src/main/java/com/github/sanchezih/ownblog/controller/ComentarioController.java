@@ -63,6 +63,7 @@ public class ComentarioController {
 	}
 
 	/**
+	 * Retorna todos los comentarios de una publicacion
 	 * 
 	 * @param publicacionId
 	 * @return
@@ -75,7 +76,7 @@ public class ComentarioController {
 
 		return !comentarios.isEmpty() ? ResponseEntity.ok(comentarios) : ResponseEntity.noContent().build();
 
-		// Otra forma de ponerlo:
+		// Otra forma de escribirlo:
 		// return !comentarios.isEmpty() ? new ResponseEntity<>(comentarios,
 		// HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

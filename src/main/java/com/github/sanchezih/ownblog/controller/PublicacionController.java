@@ -84,6 +84,7 @@ public class PublicacionController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Actualizar una publicacion", notes = "xyz...")
 	@PutMapping("/{id}")
 	public ResponseEntity<PublicacionRequestDTO> updatePublicacion(
 			@Valid @RequestBody PublicacionRequestDTO publicacionDTO, @PathVariable(name = "id") long id) {
@@ -96,6 +97,7 @@ public class PublicacionController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Eliminar una publicacion", notes = "xyz...")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletePublicacion(@PathVariable(name = "id") long id) {
 		publicacionService.deletePublicacion(id);

@@ -81,8 +81,10 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 */
 	@Override
 	public Publicacion getOneById(long id) {
+
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new BadRequestException("Invalid id"));
+
 		return publicacion;
 	}
 
@@ -91,6 +93,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 	 */
 	@Override
 	public PublicacionRequestDTO updatePublicacion(PublicacionRequestDTO publicacionRequestDTO, long id) {
+
 		Publicacion publicacion = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 
