@@ -60,9 +60,7 @@ public class PublicacionController {
 	@Operation(summary = "Obtener una publicacion")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getOne(@PathVariable(name = "id") Long publicacionId) {
-
 		Publicacion publicacion = publicacionService.getOne(publicacionId);
-
 		return ResponseEntity.ok(publicacion);
 	}
 
@@ -112,7 +110,6 @@ public class PublicacionController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
 		publicacionService.delete(id);
-
 		return ResponseEntity.noContent().build();
 	}
 }

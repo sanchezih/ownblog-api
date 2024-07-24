@@ -1,10 +1,17 @@
 package com.github.sanchezih.ownblog.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -23,6 +30,10 @@ public class Publicacion {
 	@Column(name = "contenido_publicacion", nullable = false)
 	private String contenido;
 
+	@JsonBackReference
+	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comentario> comentarios = new HashSet<>();
+
 	/*----------------------------------------------------------------------------*/
 
 	/**
@@ -32,10 +43,10 @@ public class Publicacion {
 	public Publicacion() {
 	}
 
-	public Publicacion(Long id, String titulo, String nombre) {
+	public Publicacion(Long id, String titulo, String contenido) {
 		this.id = id;
 		this.titulo = titulo;
-		this.contenido = nombre;
+		this.contenido = contenido;
 
 	}
 
@@ -65,4 +76,11 @@ public class Publicacion {
 		this.contenido = contenido;
 	}
 
+	public Set<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
 }
