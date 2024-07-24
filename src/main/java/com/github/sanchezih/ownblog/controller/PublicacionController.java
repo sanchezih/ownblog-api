@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.PublicacionRequestDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionResponseDTO;
+import com.github.sanchezih.ownblog.dto.req.PublicacionRequestDTO;
+import com.github.sanchezih.ownblog.dto.res.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 

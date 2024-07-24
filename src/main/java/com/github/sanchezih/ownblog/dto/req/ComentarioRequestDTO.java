@@ -1,4 +1,4 @@
-package com.github.sanchezih.ownblog.dto;
+package com.github.sanchezih.ownblog.dto.req;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

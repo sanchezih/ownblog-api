@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.PublicacionRequestDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionResponseDTO;
+import com.github.sanchezih.ownblog.dto.req.PublicacionRequestDTO;
+import com.github.sanchezih.ownblog.dto.res.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
 import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;

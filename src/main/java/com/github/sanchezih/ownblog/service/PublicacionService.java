@@ -1,7 +1,7 @@
 package com.github.sanchezih.ownblog.service;
 
-import com.github.sanchezih.ownblog.dto.PublicacionRequestDTO;
-import com.github.sanchezih.ownblog.dto.PublicacionResponseDTO;
+import com.github.sanchezih.ownblog.dto.req.PublicacionRequestDTO;
+import com.github.sanchezih.ownblog.dto.res.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 
 public interface PublicacionService {

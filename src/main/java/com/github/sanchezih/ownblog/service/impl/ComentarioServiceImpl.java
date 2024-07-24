@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.ComentarioRequestDTO;
+import com.github.sanchezih.ownblog.dto.req.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
@@ -59,7 +59,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	}
 
 	@Override
-	public Comentario getComentarioById(Long publicacionId, Long comentarioId) {
+	public Comentario getOne(Long publicacionId, Long comentarioId) {
 		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -101,7 +101,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	}
 
 	@Override
-	public void deleteComentario(Long publicacionId, Long comentarioId) {
+	public void delete(Long publicacionId, Long comentarioId) {
 		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
