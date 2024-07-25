@@ -2,6 +2,8 @@
 
 
 ## SQL
+
+```sql
 USE ownblog;
 delete from 
   publicacion;
@@ -102,3 +104,4 @@ VALUES
   (
     'Hacer ejercicio', 'Las plataformas pueden ser gratuitas o tener opciones de pago para los usuarios que deseen rutinas...'
   );
+ ```
