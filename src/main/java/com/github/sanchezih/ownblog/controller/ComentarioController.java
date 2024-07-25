@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.sanchezih.ownblog.dto.req.ComentarioRequestDTO;
+import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.service.ComentarioService;
 

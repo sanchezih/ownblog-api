@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.sanchezih.ownblog.dto.req.ComentarioRequestDTO;
+import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
