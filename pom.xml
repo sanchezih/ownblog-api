@@ -12,9 +12,9 @@
 	</parent>
 
 	<groupId>com.github.sanchezih</groupId>
-	<artifactId>ownblog-api2</artifactId>
+	<artifactId>ownblog-api</artifactId>
 	<version>1.0.0</version>
-	<name>ownblog-api2</name>
+	<name>ownblog-api</name>
 	<description>Demo project for Spring Boot</description>
 
 	<url />
