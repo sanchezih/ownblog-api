@@ -1,0 +1,99 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/*.contenedor{
+    margin: 0 auto;
+    width: 1200px;
+
+}*/
+.header .top-header {
+	padding: 6px 0;
+	font-size: 14px;
+	border-bottom: 1px solid #cccccc;
+	background: #fafafa;
+	overflow: hidden;
+}
+
+.header .top-header .contenedor .top-menu {
+	float: left;
+}
+
+.header .top-header .contenedor .top-menu ul {
+	list-style: none;
+}
+
+.header .top-header .contenedor .top-menu ul li {
+	float: left;
+}
+
+.header .top-header .contenedor .top-menu ul li a {
+	text-decoration: none;
+	color: #3d3f42;
+	font-weight: bold;
+	padding: 10px 15px;
+	display: inline-block;
+}
+
+.header .top-header .contenedor .top-menu ul li a:hover {
+	/*cambiar el color cuando pase el mouse por encima*/
+	color: #a6aab1;
+}
+
+.header .top-header .contenedor .top-redes {
+	float: right;
+}
+
+.header .top-header .contenedor .top-redes ul {
+	list-style: none;
+}
+
+.header .top-header .contenedor .top-redes ul li {
+	float: right;
+}
+
+.header .top-header .contenedor .top-redes ul li a {
+	text-decoration: none;
+	color: #3d3f42;
+	font-weight: bold;
+	padding: 10px 15px;
+	display: inline-block;
+}
+
+.header .top-header .contenedor .top-redes ul li a:hover {
+	/*cambiar el color cuando pase el mouse por encima*/
+	color: #a6aab1;
+}
+
+.header .titulo {
+	/* esto se puede poner dentro de la etiqueta h1 en el html como hice con la portada git*/
+	margin: 35px 0;
+	text-align: center;
+}
+
+.header .titulo .contenedor h1 a {
+	text-decoration: none;
+	color: black;
+	font-size: 60px;
+	display: inline-block;
+	padding: 30px 0;
+	font-weight: bold;
+}
+
+.header .titulo .contenedor h1 a:hover {
+	color: #787a7c(245, 110, 110);
+}
+
+.header .titulo .contenedor .subtitulo {
+	font-size: 18px;
+	letter-spacing: 1px;
+	color: rgb(245, 110, 110);
+}
+
+body {
+	font-family: sans-serif;
+}
