@@ -5,6 +5,7 @@
 
 ```sql
 USE ownblog;
+DELETE FROM comentario;
 DELETE FROM publicacion;
 INSERT INTO publicacion(titulo_publicacion, contenido_publicacion)
 VALUES('Los mejores juegos para iPhone', 'Los usuarios pueden descargar estas aplicaciones de forma gratuita desde la App Store...');
