@@ -1,7 +1,9 @@
 package com.github.sanchezih.ownblog.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
-import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 
 public interface PublicacionService {
@@ -10,7 +12,7 @@ public interface PublicacionService {
 
 	public Publicacion getOne(Long id);
 
-	public PublicacionResponseDTO getAll(int numeroDePagina, int medidaDePagina, String ordenarPor, String sortDir);
+	public Page<Publicacion> getAll(Pageable pageable);
 
 	public Publicacion update(PublicacionRequestDTO publicacionRequestDTO, Long id);
 

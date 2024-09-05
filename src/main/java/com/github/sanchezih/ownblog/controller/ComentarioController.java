@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/publicaciones/{publicacionId}/comentarios")
+@RequestMapping("/api/v1/publicaciones/{publicacionId}/comentarios")
 public class ComentarioController {
 
 	@Autowired
@@ -38,11 +38,9 @@ public class ComentarioController {
 	 */
 	@Operation(summary = "Crear un comentario")
 	@PostMapping
-	public ResponseEntity<?> create(@PathVariable(value = "publicacionId") long publicacionId,
+	public ResponseEntity<?> create(@PathVariable(value = "publicacionId") Long publicacionId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioRequestDTO) {
-
 		Comentario res = comentarioService.create(publicacionId, comentarioRequestDTO);
-
 		return new ResponseEntity<>(res, HttpStatus.CREATED);
 	}
 

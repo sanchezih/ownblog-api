@@ -1,20 +1,13 @@
 package com.github.sanchezih.ownblog.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
-import com.github.sanchezih.ownblog.dto.response.PublicacionResponseDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
-import com.github.sanchezih.ownblog.exceptions.custom.BadRequestException;
 import com.github.sanchezih.ownblog.exceptions.custom.ResourceNotFoundException;
 import com.github.sanchezih.ownblog.repository.PublicacionRepository;
 import com.github.sanchezih.ownblog.service.PublicacionService;
@@ -30,103 +23,47 @@ public class PublicacionServiceImpl implements PublicacionService {
 
 	/*----------------------------------------------------------------------------*/
 
-	/**
-	 * 
-	 */
 	@Override
 	public Publicacion create(PublicacionRequestDTO publicacionRequestDTO) {
-		Publicacion publicacion = mapPublicacionRequestDTOToPublicacion(publicacionRequestDTO);
-		publicacionRepository.save(publicacion);
-		return publicacion;
+		Publicacion publicacionACrear = mapPublicacionRequestDTOToPublicacion(publicacionRequestDTO);
+		Publicacion publicacionCreada = publicacionRepository.save(publicacionACrear);
+		return publicacionCreada;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public Publicacion getOne(Long id) {
-
 		Publicacion publicacion = publicacionRepository.findById(id)
-				.orElseThrow(() -> new BadRequestException("id invalido"));
-
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 		return publicacion;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
-	public PublicacionResponseDTO getAll(int pageNo, int pageSize, String sortBy, String sortDir) {
-
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
-				: Sort.by(sortBy).descending();
-
-		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-		Page<Publicacion> publicaciones = publicacionRepository.findAll(pageable);
-		List<Publicacion> listaDePublicaciones = publicaciones.getContent();
-
-		// Si bien aca habria que devolver objetos de tipo Publicacion, se
-		// opta por devolver objetos de tipo PublicacionRequestDTO para mostrar lo
-		// siguiente...
-		List<PublicacionRequestDTO> contenido = listaDePublicaciones.stream()
-				.map(publicacion -> mapPublicacionToPublicacionRequestDTO(publicacion)).collect(Collectors.toList());
-
-		PublicacionResponseDTO res = new PublicacionResponseDTO();
-		res.setContenido(contenido);
-		res.setNumeroPagina(publicaciones.getNumber());
-		res.setMedidaPagina(publicaciones.getSize());
-		res.setTotalElementos(publicaciones.getTotalElements());
-		res.setTotalPaginas(publicaciones.getTotalPages());
-		res.setUltima(publicaciones.isLast());
-
-		return res;
+	public Page<Publicacion> getAll(Pageable pageable) {
+		return publicacionRepository.findAll(pageable);
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public Publicacion update(PublicacionRequestDTO publicacionRequestDTO, Long id) {
-
-		Publicacion publicacion = publicacionRepository.findById(id)
+		Publicacion publicacionAActualizar = publicacionRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
 
-		publicacion.setTitulo(publicacionRequestDTO.getTitulo());
-		publicacion.setContenido(publicacionRequestDTO.getContenido());
+		publicacionAActualizar.setTitulo(publicacionRequestDTO.getTitulo());
+		publicacionAActualizar.setContenido(publicacionRequestDTO.getContenido());
 
-		publicacionRepository.save(publicacion);
+		Publicacion publicacionActualizada = publicacionRepository.save(publicacionAActualizar);
+		return publicacionActualizada;
+	}
+
+	@Override
+	public void delete(Long id) {
+		Publicacion publicacionAEliminar = publicacionRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+		publicacionRepository.delete(publicacionAEliminar);
+	}
+
+	private Publicacion mapPublicacionRequestDTOToPublicacion(PublicacionRequestDTO publicacionRequestDTO) {
+		Publicacion publicacion = modelMapper.map(publicacionRequestDTO, Publicacion.class);
 		return publicacion;
 	}
 
-	/**
-	 * 
-	 */
-	@Override
-	public void delete(Long id) {
-		Publicacion publicacion = publicacionRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
-		publicacionRepository.delete(publicacion);
-	}
-
-	/**
-	 * Convierte entidad a DTO
-	 * 
-	 * @param publicacion
-	 * @return
-	 */
-	private PublicacionRequestDTO mapPublicacionToPublicacionRequestDTO(Publicacion publicacion) {
-		PublicacionRequestDTO publicacionDTO = modelMapper.map(publicacion, PublicacionRequestDTO.class);
-		return publicacionDTO;
-	}
-
-	/**
-	 * Convierte DTO a entidad
-	 * 
-	 * @param publicacionRequestDTO
-	 * @return
-	 */
-	private Publicacion mapPublicacionRequestDTOToPublicacion(PublicacionRequestDTO publicacionRequestDTO) {
-		Publicacion aeropuerto = modelMapper.map(publicacionRequestDTO, Publicacion.class);
-		return aeropuerto;
-	}
 }

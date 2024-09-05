@@ -9,5 +9,5 @@ import com.github.sanchezih.ownblog.entity.Comentario;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
-	public List<Comentario> findByPublicacionId(long publicacionId);
+	public List<Comentario> findByPublicacionId(Long publicacionId);
 }
