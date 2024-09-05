@@ -50,7 +50,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	 * 
 	 */
 	@Override
-	public List<Comentario> getAllComentariosByPublicacionId(long publicacionId) {
+	public List<Comentario> getAllComentariosByPublicacionId(Long publicacionId) {
 		
 		// Busco si la publicacion existe
 		publicacionRepository.findById(publicacionId)

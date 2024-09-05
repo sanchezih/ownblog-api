@@ -60,8 +60,7 @@ public class ComentarioController {
 	@GetMapping
 	public ResponseEntity<List<Comentario>> getAll(@PathVariable(value = "publicacionId") Long publicacionId) {
 		List<Comentario> comentarios = comentarioService.getAllComentariosByPublicacionId(publicacionId);
-		return !comentarios.isEmpty() ? ResponseEntity.ok(comentarios) : ResponseEntity.noContent().build();
-
+		return new ResponseEntity<>(comentarios, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Actualizar un comentario")

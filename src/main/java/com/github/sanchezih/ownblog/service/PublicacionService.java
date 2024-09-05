@@ -7,7 +7,6 @@ import com.github.sanchezih.ownblog.dto.request.PublicacionRequestDTO;
 import com.github.sanchezih.ownblog.entity.Publicacion;
 
 public interface PublicacionService {
-
 	public Publicacion create(PublicacionRequestDTO publicacionRequestDTO);
 
 	public Publicacion getOne(Long id);
