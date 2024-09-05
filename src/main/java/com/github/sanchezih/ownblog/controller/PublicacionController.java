@@ -32,7 +32,9 @@ public class PublicacionController {
 
 	@Operation(summary = "Crear una publicacion")
 	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody PublicacionRequestDTO publicacionRequestDTO) {
+	public ResponseEntity<?> create(
+
+			@Valid @RequestBody PublicacionRequestDTO publicacionRequestDTO) {
 		Publicacion publicacionCreada = publicacionService.create(publicacionRequestDTO);
 		return new ResponseEntity<>(publicacionCreada, HttpStatus.CREATED);
 	}
@@ -48,7 +50,7 @@ public class PublicacionController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getOne(@PathVariable(name = "id") Long publicacionId) {
 		Publicacion publicacion = publicacionService.getOne(publicacionId);
-		return ResponseEntity.ok(publicacion);
+		return new ResponseEntity<>(publicacion, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Obtener todas las publicaciones existentes al momento")
@@ -56,6 +58,7 @@ public class PublicacionController {
 	public ResponseEntity<?> getAll(Pageable pageable) {
 		Page<Publicacion> res = publicacionService.getAll(pageable);
 		return new ResponseEntity<>(res, HttpStatus.OK);
+
 	}
 
 	@Operation(summary = "Actualizar una publicacion")

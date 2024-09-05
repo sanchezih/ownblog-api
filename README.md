@@ -4,7 +4,7 @@
 ## SQL
 
 ```sql
-USE ownblog;
+USE ownblogdb;
 DELETE FROM comentario;
 DELETE FROM publicacion;
 INSERT INTO publicacion(titulo_publicacion, contenido_publicacion)
