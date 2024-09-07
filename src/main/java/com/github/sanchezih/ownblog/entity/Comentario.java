@@ -11,9 +11,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "comentario")
+@Table(name = "comentario", uniqueConstraints = {
+
+		// No se permiten comentarios duplicados del mismo email para una misma
+		// publicacion
+		@UniqueConstraint(columnNames = { "id_publicacion", "email", "cuerpo" }) })
+
 public class Comentario {
 
 	@Id
@@ -24,7 +30,7 @@ public class Comentario {
 	@Column(name = "nombre", length = 60, nullable = false)
 	private String nombre;
 
-	@Column(name = "email", length = 60, nullable = false, unique = true)
+	@Column(name = "email", length = 60, nullable = false)
 	private String email;
 
 	private String cuerpo;
@@ -39,8 +45,7 @@ public class Comentario {
 	public Comentario() {
 	}
 
-	public Comentario(long id, String nombre, String email, String cuerpo, Publicacion publicacion) {
-		super();
+	public Comentario(Long id, String nombre, String email, String cuerpo, Publicacion publicacion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
@@ -50,11 +55,11 @@ public class Comentario {
 
 	/*----------------------------------------------------------------------------*/
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

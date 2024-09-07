@@ -16,7 +16,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "publicacion", uniqueConstraints = { @UniqueConstraint(columnNames = { "titulo" }) })
+//@Table(name = "publicacion", uniqueConstraints = {@UniqueConstraint(columnNames = { "titulo_publicacion", "contenido_publicacion" }) })
+
+@Table(name = "publicacion")
 public class Publicacion {
 
 	@Id
@@ -24,7 +26,8 @@ public class Publicacion {
 	@Column(name = "id_publicacion")
 	private Long id;
 
-	@Column(name = "titulo_publicacion", nullable = false)
+	// No se permite que se repita el titulo de una publicacion
+	@Column(name = "titulo_publicacion", nullable = false, unique = true)
 	private String titulo;
 
 	@Column(name = "contenido_publicacion", nullable = false)

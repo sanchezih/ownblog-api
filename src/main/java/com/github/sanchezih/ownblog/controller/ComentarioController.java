@@ -3,6 +3,8 @@ package com.github.sanchezih.ownblog.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,52 +32,45 @@ public class ComentarioController {
 
 	/*----------------------------------------------------------------------------*/
 
-	/**
-	 * 
-	 * @param publicacionId
-	 * @param comentarioRequestDTO
-	 * @return
-	 */
 	@Operation(summary = "Crear un comentario")
 	@PostMapping
-	public ResponseEntity<?> create(@PathVariable(value = "id") Long publicacionId,
+	public ResponseEntity<?> create(@PathVariable(name = "publicacionId") Long pubId,
 			@Valid @RequestBody ComentarioRequestDTO comentarioRequestDTO) {
-		Comentario comentarioCreado = comentarioService.create(publicacionId, comentarioRequestDTO);
+
+		Comentario comentarioCreado = comentarioService.create(pubId, comentarioRequestDTO);
 		return new ResponseEntity<>(comentarioCreado, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getOne(@PathVariable(value = "pubId") Long publicacionId,
-			@PathVariable(value = "commId") Long comentarioId) {
+	@Operation(summary = "Obtener un comentario")
+	@GetMapping("/{comentarioId}")
+	public ResponseEntity<?> getOne(@PathVariable(name = "publicacionId") Long pubId,
+			@PathVariable(value = "comentarioId") Long comenId) {
 
-		Comentario comentario = comentarioService.getOne(publicacionId, comentarioId);
+		Comentario comentario = comentarioService.getOne(pubId, comenId);
 		return new ResponseEntity<>(comentario, HttpStatus.OK);
 	}
 
-	/**
-	 * 
-	 * @param publicacionId
-	 * @return
-	 */
+	@Operation(summary = "Obtener todos los comentarios pertenecientes a una publicacion existentes al momento")
 	@GetMapping
-	public ResponseEntity<List<Comentario>> getAll(@PathVariable(value = "publicacionId") Long publicacionId) {
-		List<Comentario> comentarios = comentarioService.getAllComentariosByPublicacionId(publicacionId);
+	public ResponseEntity<?> getAll(@PathVariable(value = "publicacionId") Long pubId, Pageable pageable) {
+		Page<Comentario> comentarios = comentarioService.getAllComentariosByPublicacionId(pubId, pageable);
 		return new ResponseEntity<>(comentarios, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Actualizar un comentario")
-	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable(value = "publicacionId") Long publicacionId,
-			@PathVariable(value = "id") Long comentarioId, @Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
+	@PutMapping("/{comentarioId}")
+	public ResponseEntity<?> update(@PathVariable(name = "publicacionId") Long pubId,
+			@PathVariable(value = "comentarioId") Long comentarioId,
+			@Valid @RequestBody ComentarioRequestDTO comentarioDTO) {
 
-		ComentarioRequestDTO comentarioActualizado = comentarioService.updateComentario(publicacionId, comentarioId,
+		ComentarioRequestDTO comentarioActualizado = comentarioService.updateComentario(pubId, comentarioId,
 				comentarioDTO);
 		return new ResponseEntity<>(comentarioActualizado, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Eliminar un comentario")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long publicacionId, @PathVariable(value = "id") Long comentarioId) {
+	public ResponseEntity<?> delete(@PathVariable Long publicacionId, @PathVariable(name = "id") Long comentarioId) {
 		comentarioService.delete(publicacionId, comentarioId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

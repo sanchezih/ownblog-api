@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
@@ -34,7 +36,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	private PublicacionService publicacionService;
 
 	@Override
-	public Comentario create(long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
+	public Comentario create(Long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
 
 		Publicacion publicacion = publicacionService.getOne(publicacionId);
 
@@ -50,13 +52,14 @@ public class ComentarioServiceImpl implements ComentarioService {
 	 * 
 	 */
 	@Override
-	public List<Comentario> getAllComentariosByPublicacionId(Long publicacionId) {
+	public Page<Comentario> getAllComentariosByPublicacionId(Long publicacionId, Pageable pageable) {
 		
 		// Busco si la publicacion existe
 		publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
 
-		return comentarioRepository.findByPublicacionId(publicacionId);
+		Page<Comentario> res = comentarioRepository.findByPublicacionId(publicacionId, pageable);
+		return res;
 	}
 
 	@Override

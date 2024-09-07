@@ -1,13 +1,15 @@
 package com.github.sanchezih.ownblog.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.github.sanchezih.ownblog.dto.request.ComentarioRequestDTO;
 import com.github.sanchezih.ownblog.entity.Comentario;
 
 public interface ComentarioService {
-	public Comentario create(long publicacionId, ComentarioRequestDTO comentarioDTO);
+	public Comentario create(Long publicacionId, ComentarioRequestDTO comentarioDTO);
 
-	public List<Comentario> getAllComentariosByPublicacionId(Long publicacionId);
+	public Page<Comentario> getAllComentariosByPublicacionId(Long publicacionId, Pageable pageable);
 
 	public Comentario getOne(Long publicacionId, Long comentarioId);
 

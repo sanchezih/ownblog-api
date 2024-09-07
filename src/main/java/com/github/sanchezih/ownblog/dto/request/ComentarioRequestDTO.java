@@ -17,12 +17,18 @@ public class ComentarioRequestDTO {
 	@Size(min = 10, message = "El cuerpo del comentario debe tener al menos 10 caracteres")
 	private String cuerpo;
 
-	/*----------------------------------------------------------------------------*/
-
-	public ComentarioRequestDTO() {
+	public ComentarioRequestDTO(@NotEmpty(message = "El nombre no debe ser vacio o nulo") String nombre,
+			@NotEmpty(message = "El email no debe ser vacio o nulo") @Email String email,
+			@NotEmpty @Size(min = 10, message = "El cuerpo del comentario debe tener al menos 10 caracteres") String cuerpo) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.cuerpo = cuerpo;
 	}
 
-	/*----------------------------------------------------------------------------*/
+	public ComentarioRequestDTO() {
+
+	}
 
 	public String getNombre() {
 		return nombre;
