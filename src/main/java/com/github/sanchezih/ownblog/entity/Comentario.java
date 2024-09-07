@@ -45,8 +45,7 @@ public class Comentario {
 	public Comentario() {
 	}
 
-	public Comentario(Long id, String nombre, String email, String cuerpo, Publicacion publicacion) {
-		this.id = id;
+	public Comentario(String nombre, String email, String cuerpo, Publicacion publicacion) {
 		this.nombre = nombre;
 		this.email = email;
 		this.cuerpo = cuerpo;

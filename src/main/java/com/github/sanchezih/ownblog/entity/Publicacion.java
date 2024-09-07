@@ -46,8 +46,7 @@ public class Publicacion {
 	public Publicacion() {
 	}
 
-	public Publicacion(Long id, String titulo, String contenido) {
-		this.id = id;
+	public Publicacion(String titulo, String contenido) {
 		this.titulo = titulo;
 		this.contenido = contenido;
 
