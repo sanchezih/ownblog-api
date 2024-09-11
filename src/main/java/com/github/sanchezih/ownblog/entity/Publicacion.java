@@ -1,6 +1,7 @@
 package com.github.sanchezih.ownblog.entity;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -13,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
 //@Table(name = "publicacion", uniqueConstraints = {@UniqueConstraint(columnNames = { "titulo_publicacion", "contenido_publicacion" }) })
@@ -34,8 +34,17 @@ public class Publicacion {
 	private String contenido;
 
 	@JsonBackReference
-	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Comentario> comentarios = new HashSet<>();
+	@OneToMany( //
+			mappedBy = "publicacion", //
+			cascade = CascadeType.ALL, // Indica que todas las operaciones que se realicen sobre la entidad principal
+										// también se aplicarán automáticamente a las entidades relacionadas.
+
+			orphanRemoval = true // Elimina automáticamente las entidades "huérfanas" de la base de datos. Una
+									// entidad "huérfana" es aquella que ha sido eliminada de una relación sin ser
+									// explícitamente eliminada de la base de datos.
+	)
+
+	private List<Comentario> comentarios = new ArrayList<>();
 
 	/*----------------------------------------------------------------------------*/
 
@@ -78,11 +87,12 @@ public class Publicacion {
 		this.contenido = contenido;
 	}
 
-	public Set<Comentario> getComentarios() {
+	public List<Comentario> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(Set<Comentario> comentarios) {
+	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
+
 }
