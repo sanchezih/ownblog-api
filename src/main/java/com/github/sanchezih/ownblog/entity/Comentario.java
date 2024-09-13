@@ -41,7 +41,6 @@ public class Comentario {
 			name = "id_publicacion", //
 			nullable = false //
 	)
-
 	private Publicacion publicacion;
 
 	/*----------------------------------------------------------------------------*/
