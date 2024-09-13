@@ -36,13 +36,8 @@ public class Comentario {
 	private String cuerpo;
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY) // La publicacion de un comentario no se va a cargar hasta q no se llame al
-										// getPublicacion()
-	@JoinColumn( // Se utiliza para especificar el nombre de la columna de una base de datos que
-					// se usara para una clave foránea en una relación entre entidades. Se aplica en
-					// las relaciones como @ManyToOne, @OneToOne, etc., para indicar cómo se debe
-					// mapear esa relacion a nivel de base de datos.
-			
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(//
 			name = "id_publicacion", //
 			nullable = false //
 	)

@@ -1,6 +1,7 @@
 package com.github.sanchezih.ownblog.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +15,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-//@Table(name = "publicacion", uniqueConstraints = {@UniqueConstraint(columnNames = { "titulo_publicacion", "contenido_publicacion" }) })
-
-@Table(name = "publicacion")
+@Table(name = "publicacion", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "titulo_publicacion", "contenido_publicacion" }) })
 public class Publicacion {
 
 	@Id
@@ -26,8 +27,7 @@ public class Publicacion {
 	@Column(name = "id_publicacion")
 	private Long id;
 
-	// No se permite que se repita el titulo de una publicacion
-	@Column(name = "titulo_publicacion", nullable = false, unique = true)
+	@Column(name = "titulo_publicacion", nullable = false)
 	private String titulo;
 
 	@Column(name = "contenido_publicacion", nullable = false)
@@ -36,15 +36,10 @@ public class Publicacion {
 	@JsonBackReference
 	@OneToMany( //
 			mappedBy = "publicacion", //
-			cascade = CascadeType.ALL, // Indica que todas las operaciones que se realicen sobre la entidad principal
-										// también se aplicarán automáticamente a las entidades relacionadas.
-
-			orphanRemoval = true // Elimina automáticamente las entidades "huérfanas" de la base de datos. Una
-									// entidad "huérfana" es aquella que ha sido eliminada de una relación sin ser
-									// explícitamente eliminada de la base de datos.
+			cascade = CascadeType.ALL, //
+			orphanRemoval = true //
 	)
-
-	private List<Comentario> comentarios = new ArrayList<>();
+	private Set<Comentario> comentarios = new HashSet<>();
 
 	/*----------------------------------------------------------------------------*/
 
@@ -87,11 +82,11 @@ public class Publicacion {
 		this.contenido = contenido;
 	}
 
-	public List<Comentario> getComentarios() {
+	public Set<Comentario> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(List<Comentario> comentarios) {
+	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
 
