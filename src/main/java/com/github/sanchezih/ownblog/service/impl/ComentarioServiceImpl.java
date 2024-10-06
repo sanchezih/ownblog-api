@@ -1,7 +1,5 @@
 package com.github.sanchezih.ownblog.service.impl;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,7 +51,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	 */
 	@Override
 	public Page<Comentario> getAllComentariosByPublicacionId(Long publicacionId, Pageable pageable) {
-		
+
 		// Busco si la publicacion existe
 		publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -64,7 +62,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 	@Override
 	public Comentario getOne(Long publicacionId, Long comentarioId) {
-	
+
 		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -84,7 +82,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	@Override
 	public ComentarioRequestDTO updateComentario(Long publicacionId, Long comentarioId,
 			ComentarioRequestDTO solicitudDeComentario) {
-		
+
 		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
@@ -108,7 +106,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 	@Override
 	public void delete(Long publicacionId, Long comentarioId) {
-	
+
 		// Busco si la publicacion existe
 		Publicacion publicacion = publicacionRepository.findById(publicacionId)
 				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
