@@ -1,7 +1,5 @@
 package com.github.sanchezih.ownblog.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +19,12 @@ import com.github.sanchezih.ownblog.entity.Comentario;
 import com.github.sanchezih.ownblog.service.ComentarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/publicaciones/{publicacionId}/comentarios")
+@Tag(name = "Comentarios", description = "Controlador para gestionar Comentarios")
 public class ComentarioController {
 
 	@Autowired

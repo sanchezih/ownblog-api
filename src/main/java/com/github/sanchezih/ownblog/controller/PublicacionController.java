@@ -19,10 +19,12 @@ import com.github.sanchezih.ownblog.entity.Publicacion;
 import com.github.sanchezih.ownblog.service.PublicacionService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/publicaciones")
+@Tag(name = "Publicaciones", description = "Controlador para gestionar Publicaciones")
 public class PublicacionController {
 
 	@Autowired
