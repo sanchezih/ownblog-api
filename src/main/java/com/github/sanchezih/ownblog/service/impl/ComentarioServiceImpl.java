@@ -1,7 +1,6 @@
 package com.github.sanchezih.ownblog.service.impl;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,17 +20,30 @@ public class ComentarioServiceImpl implements ComentarioService {
 
 	private static final String COMENTARIO_NO_PERTENECE = "El comentario no pertenece a la publicacion";
 
-	@Autowired
-	private ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
+	private final ComentarioRepository comentarioRepository;
+	private final PublicacionRepository publicacionRepository;
+	private final PublicacionService publicacionService;
 
-	@Autowired
-	private ComentarioRepository comentarioRepository;
+	/*----------------------------------------------------------------------------*/
 
-	@Autowired
-	private PublicacionRepository publicacionRepository;
+	/**
+	 * Inyeccion de dependencias por constructor
+	 * 
+	 * @param modelMapper
+	 * @param comentarioRepository
+	 * @param publicacionRepository
+	 * @param publicacionService
+	 */
+	public ComentarioServiceImpl(ModelMapper modelMapper, ComentarioRepository comentarioRepository,
+			PublicacionRepository publicacionRepository, PublicacionService publicacionService) {
+		this.modelMapper = modelMapper;
+		this.comentarioRepository = comentarioRepository;
+		this.publicacionRepository = publicacionRepository;
+		this.publicacionService = publicacionService;
+	}
 
-	@Autowired
-	private PublicacionService publicacionService;
+	/*----------------------------------------------------------------------------*/
 
 	@Override
 	public Comentario create(Long publicacionId, ComentarioRequestDTO comentarioRequestDTO) {
