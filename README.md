@@ -1,10 +1,10 @@
 # ownblog-api
 
 
-## SQL
+## Inicializar la DB
 
 ```sql
-USE ownblogdb;
+USE ownblog_api_db;
 DELETE FROM comentario;
 DELETE FROM publicacion;
 INSERT INTO publicacion(titulo_publicacion, contenido_publicacion)
